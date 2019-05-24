@@ -2,32 +2,72 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #212327;
+  min-height: 7vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 18px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.Main {
+  background-color: #282c34;
+  min-height: 93vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(1px + 2vmin);
+  color: white;
+}
+ul {
+  list-style: none;
+  display: inline;
+}
+.KanbanBox{
+  min-height: 84vh;
+  min-width: 96vw;
+  margin: 3vh;
+}
+.KanbanBox:after{
+  display: table;
+  clear: both;
+}
+.row{ 
+  background-color: #3f4247;
+  border-radius: 6px;
+  float: left;
+  width: 30vh;
+  margin-right: 2vh;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.row-header{
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.re{
+  margin: 1.4vh;
+  padding: 1vh;
+  border-radius: 4px;
+  background-color: #282c34;
+}
+
+.nyttKort{
+  margin-top: 2%;
+  padding: 1vh;
+  border-radius: 2px;
+  background-color: #333b55;
+  cursor: pointer;
+  border: 0;
+  min-width: 100%;
+  color: #fff;
+  font-size: 14px;
+  position: center;
 }
