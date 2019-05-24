@@ -23,6 +23,26 @@
   font-size: calc(1px + 2vmin);
   color: white;
 }
+
+h3{
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.loggut{
+  border-radius: 2px;
+  background-color: #b81e1e;
+  cursor: pointer;
+  border: 0;
+  min-width: 8vh;
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  padding: 0.6vh;
+  right: 2vh;
+  position: absolute;
+}
 ul {
   list-style: none;
   display: inline;
@@ -60,7 +80,6 @@ ul {
 }
 
 .nyttKort{
-  margin-top: 2%;
   padding: 1vh;
   border-radius: 2px;
   background-color: #333b55;
