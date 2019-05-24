@@ -90,3 +90,45 @@ ul {
   font-size: 14px;
   position: center;
 }
+.form-control{
+  width: 33%;
+  padding: 10px 12px;
+  padding-right: 10px;
+  font-size:16px;
+  color: #fff;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1.4px solid #d4d4d4;
+  border-radius: 3px;
+  outline: none;
+  background: #c8d4e6;
+}
+.loginform{
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -15vh;
+  margin-left: -20vh;
+}
+.loginform input{
+  width: 30vh;
+}
+.loginBG {
+  position: fixed;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+}
+.loginbtn{
+  border-radius: 2px;
+  background-color: #24363d;
+  cursor: pointer;
+  border: 0;
+  min-width: 8vh;
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  padding: 0.6vh;
+}

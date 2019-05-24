@@ -4,6 +4,7 @@ import firebase from './firebase';
 import Kanban from './Kanban';
 import Login from './Login';
 
+
 class App extends Component {
   constructor() {
     super();
@@ -31,7 +32,11 @@ class App extends Component {
   }
   render() {
     return (
-     <div>{this.state.user ? ( <Kanban/>) : (<Login />)}</div>);
-}
+     <div>
+        
+        {this.state.user ? ( <Kanban/>) : (<Login />)}
+     </div>
+     );
+  }
 }
  export default App;
