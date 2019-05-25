@@ -24,16 +24,14 @@ class App extends React.Component {
           <div className="KanbanBox">
             
             <div className="row">
-            
-                        
-              <h1 className="row-header">TODO testing</h1>
-              <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']}/>
+              <h1 className="row-header">TODO testing</h1> <i className="far fa-clock" />
+              <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Lemon', 'Orange', 'Pear', 'Peach', 'Lemon']}/>
               <button className="nyttKort"> Legg til kort</button>
             </div>
 
             <div className="row">
               <h1 className="row-header">TODO test1</h1>
-              <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']}/>
+              <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach', 'Orange', 'Pear', 'Peach']}/>
               <button className="nyttKort"> Legg til kort</button>
             </div>
 
@@ -44,7 +42,7 @@ class App extends React.Component {
             </div>
 
             <div className="row">
-              <button className="nyttKort"> Legg til liste</button>
+              <button className="nyListe"> Legg til liste</button>
             </div>
             
           </div>

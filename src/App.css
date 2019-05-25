@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #212327;
+  background-color: #92aafb;
   min-height: 7vh;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
 }
 
 .Main {
-  background-color: #282c34;
+  background-color: #EEF2F9;
   min-height: 93vh;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ h3{
 
 .loggut{
   border-radius: 2px;
-  background-color: #b81e1e;
+  background-color: rgb(212, 136, 152);
   cursor: pointer;
   border: 0;
   min-width: 8vh;
@@ -46,6 +46,7 @@ h3{
 ul {
   list-style: none;
   display: inline;
+  padding: 0;
 }
 .KanbanBox{
   min-height: 84vh;
@@ -57,39 +58,51 @@ ul {
   clear: both;
 }
 .row{ 
-  background-color: #3f4247;
+  background-color: #f6f8fc;
   border-radius: 6px;
   float: left;
   width: 30vh;
   margin-right: 2vh;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.26);
 }
 
 .row-header{
   font-size: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
+  margin: 2vh;
+  align-items: left;
+  color: #818b98;
 }
 .re{
   margin: 1.4vh;
   padding: 1vh;
   border-radius: 4px;
-  background-color: #282c34;
+  background-color: #ffffff;
+  color: #5d5c80;
 }
 
 .nyttKort{
   padding: 1vh;
   border-radius: 2px;
-  background-color: #333b55;
+  background-color: rgb(220, 225, 233);
   cursor: pointer;
   border: 0;
   min-width: 100%;
-  color: #fff;
+  color: #818b98;
   font-size: 14px;
   position: center;
 }
+.nyListe{
+  padding: 1vh;
+  border-radius: 6px;
+  background-color: #f6f8fc;
+  cursor: pointer;
+  border: 0;
+  min-width: 100%;
+  color: #5d5c80;
+  font-size: 14px;
+  position: center;
+}
+
 .LoginInput{
   width: 28vh;
   font-size:16px;
