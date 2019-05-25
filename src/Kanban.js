@@ -7,11 +7,42 @@ import './App.css';
 class App extends React.Component {
     constructor() {
         super();
+        this.state = {
+          pro: false
+        }
+
         this.logout = this.logout.bind(this);
     }
     logout() {
         firebase.auth().signOut();
     }
+
+    inputKortRender() {
+      return (
+        <div className="inputKort1">
+          <input
+            className="inputKort"
+            type="text"
+            placeholder="Nytt kort"
+          />
+          <button className="loggut" id="leggtilKort"> Legg til</button>
+          <button className="loggut" id="leggtilKortAvbryt">X</button>
+        </div>
+      );
+    }
+
+    btnKortRender() {
+      return (
+        <div>
+          <button onClick={this.onCl} className="nyttKort"> Legg til Kort</button>
+        </div>
+      );
+    }
+
+    onCl = () => {
+      this.setState({
+        pro: true
+      });}
 
     render() {
       return (
@@ -32,13 +63,16 @@ class App extends React.Component {
             <div className="row">
               <h1 className="row-header">TODO test1</h1>
               <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach', 'Orange', 'Pear', 'Peach']}/>
-              <button className="nyttKort"> Legg til kort</button>
+              {this.state.pro === false
+                    ? this.btnKortRender()
+                    : this.inputKortRender()}
             </div>
 
             <div className="row">
               <h1 className="row-header">TODO test123</h1>
               <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']}/>
-              <button className="nyttKort"> Legg til kort</button>
+              
+
             </div>
 
             <div className="row">
