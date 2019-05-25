@@ -90,29 +90,27 @@ ul {
   font-size: 14px;
   position: center;
 }
-.form-control{
-  width: 33%;
-  padding: 10px 12px;
-  padding-right: 10px;
+.LoginInput{
+  width: 28vh;
   font-size:16px;
   color: #fff;
-  margin-bottom: 20px;
+  padding: 10px 12px;
+  margin-bottom: 3vh;
+  margin-top: 1vh;
   border: none;
-  border-bottom: 1.4px solid #d4d4d4;
   border-radius: 3px;
-  outline: none;
   background: #c8d4e6;
 }
 .loginform{
+  background-color: rgba(58, 63, 75, .85);
+  border-radius: 6px;
+  padding: 4vh;
   text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -15vh;
+  margin-top: -25vh;
   margin-left: -20vh;
-}
-.loginform input{
-  width: 30vh;
 }
 .loginBG {
   position: fixed;
@@ -123,12 +121,34 @@ ul {
 }
 .loginbtn{
   border-radius: 2px;
-  background-color: #24363d;
   cursor: pointer;
   border: 0;
-  min-width: 8vh;
+  min-width: 30vh;
   color: #fff;
-  font-size: 12px;
+  font-size: 1.5vh;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  padding: 0.6vh;
+  padding: 1vh;
+  display: inline;
+  padding: 10px 12px;
+}
+#loginbtn{
+  background-color: #3e8abd;
+}
+
+#signupbtn{
+  background-color: #24363d;
+  margin-top: 2vh;
+}
+
+.login-group label{
+  font-size: 2vh;
+  color: #fff;
+  text-align: right;
+}
+
+.LoginText{
+  font-size: 4vh;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 0;
 }
