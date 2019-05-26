@@ -9,7 +9,7 @@ class App extends React.Component {
         super();
         this.state = {
           navnKort: "",
-          pro: false,
+          NyttKortBtn: false,
           items: []
         };
 
@@ -31,6 +31,9 @@ class App extends React.Component {
 
     handleSubmit(e) {
       e.preventDefault();
+      if (this.state.navnKort === "") {
+        return;
+      }
       const itemsRef = firebase.database().ref('items');
       const item = {
         title: this.state.navnKort,
@@ -40,6 +43,9 @@ class App extends React.Component {
       this.setState({
         navnKort: ''
       });
+      this.setState({
+        NyttKortBtn: false
+      })
     }
 
     unixToTime(timecode) {
@@ -63,6 +69,11 @@ class App extends React.Component {
           items: newState
         });
       });
+    }
+
+    removeItem(itemId) {
+      const itemRef = firebase.database().ref(`/items/${itemId}`);
+      itemRef.remove();
     }
 
     inputKortRender() {
@@ -94,13 +105,13 @@ class App extends React.Component {
     }
 
     ToggleNyttKort = () => {
-      if(!this.state.pro){
+      if(!this.state.NyttKortBtn){
       this.setState({
-        pro: true
+        NyttKortBtn: true
       });
       } 
       else{this.setState({
-        pro: false
+        NyttKortBtn: false
       });
       }
     }
@@ -138,7 +149,12 @@ class App extends React.Component {
                         <SharedGroup items={[
                         <div>
                           <div className="KortNavn">{item.title}</div>
-                          <div id="KortSlettDiv"><button className="btnBasic" id="KortSlett"><i className="fas fa-trash"/></button></div>
+                          <div id="KortSlettDiv">
+                            <button className="btnBasic" id="KortSlett" 
+                              onClick={() => this.removeItem(item.id)}>
+                              <i className="fas fa-trash"/>
+                            </button>
+                          </div>
                           <div className="KortLagtTil">{this.unixToTime(item.creation)}</div>
                         </div>]}/>
                       </li>
@@ -147,12 +163,11 @@ class App extends React.Component {
                   </ul>
                 </div>
               </section>
-              {this.state.pro === false
+              {this.state.NyttKortBtn === false
                     ? this.btnKortRender()
                     : this.inputKortRender()
               }
             </div>
-
             <div className="row">
               <button className="nyListe"> Legg til liste</button>
             </div>

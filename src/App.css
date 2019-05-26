@@ -191,7 +191,7 @@ ul {
 
 #leggtilKortAvbryt{
   position: relative;
-  background-color: rgb(223, 80, 80);
+  background-color: #df5050;
   margin: 1vh;
   right: 1vh;
   min-width: 3vh;
@@ -206,10 +206,18 @@ ul {
 #KortSlett{
   min-width: 2.5vh;
   font-size: 1.1vh;
+  color: rgba(50, 115, 220, 0.3);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  background-color: transparent;
+}
+#KortSlett:hover{
+  background-color: #df5050;
+  color: #fff;
 }
 
 #KortSlettDiv{
   display: inline;
   float: right;
-  margin-top: -0.2vh;
+  margin-top: -1vh;
+  margin-right: -0.2vh;
 }
