@@ -26,7 +26,7 @@ class App extends React.Component {
             placeholder="Nytt kort"
           />
           <button className="loggut" id="leggtilKort"> Legg til</button>
-          <button className="loggut" id="leggtilKortAvbryt">X</button>
+          <button onClick={this.onCl} className="loggut" id="leggtilKortAvbryt">X</button>
         </div>
       );
     }
@@ -40,9 +40,12 @@ class App extends React.Component {
     }
 
     onCl = () => {
+      if(!this.state.pro){
       this.setState({
         pro: true
-      });}
+      });} else {this.setState({
+        pro: false
+      });}}
 
     render() {
       return (
