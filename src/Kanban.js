@@ -126,20 +126,29 @@ class App extends React.Component {
           <main className="Main">
           <div className="KanbanBox">
             
-            <div className="row">
-              <h1 className="row-header">TODO testing</h1> <i className="far fa-clock" />
+            <div className="row" id="row1test">
+              <div id="rowHeader">
+                <h1>TODO testing</h1>
+                <i class="fas fa-ellipsis-v" id="editRow"></i>
+              </div>
               <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Lemon', 'Orange', 'Pear', 'Peach', 'Lemon']}/>
               <button className="nyttKort"> Legg til kort</button>
             </div>
 
-            <div className="row">
-              <h1 className="row-header">TODO test1</h1>
+            <div className="row" id="row2test">
+              <div id="rowHeader">
+                <h1>TODO test1</h1>
+                <i class="fas fa-ellipsis-v" id="editRow"></i>
+              </div>
               <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach', 'Orange', 'Pear', 'Peach']}/>
               
             </div>
 
             <div className="row">
-              <h1 className="row-header">TODO test123</h1>
+              <div id="rowHeader">
+                <h1>TODO test123</h1>
+                <i class="fas fa-ellipsis-v" id="editRow"></i>
+              </div>
               <section className='display-item'>
                 <div className="wrapper">
                   <ul>
@@ -168,8 +177,8 @@ class App extends React.Component {
                     : this.inputKortRender()
               }
             </div>
-            <div className="row">
-              <button className="nyListe"> Legg til liste</button>
+            <div className="rowListe">
+              <button id="nyListe"> Legg til liste</button>
             </div>
             
           </div>

@@ -62,19 +62,33 @@ ul {
   clear: both;
 }
 .row{ 
-  background-color: #f6f8fc;
-  border-radius: 6px;
   float: left;
   width: 30vh;
   margin-right: 2vh;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  border-top: 0.5vh solid transparent;
+  background-image: linear-gradient(#f6f8fc, #f6f8fc), linear-gradient(to right, #84fab0 0%, #8fd3f4 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+#row1test{
+  background-image: linear-gradient(#f6f8fc, #f6f8fc), linear-gradient(to right, #f794a4 0%, #fdd6bd 100%);
+}
+#row2test{
+  background-image: linear-gradient(#f6f8fc, #f6f8fc), linear-gradient(to right, #d9afd9 0%, #97d9e1 100%);
 }
 
-.row-header{
+.row h1{
   font-size: 15px;
-  margin: 2vh;
+  margin-left: 2vh;
+  display: inline;
   align-items: left;
   color: #818b98;
+}
+#rowHeader{
+  margin-top: 1vh;
+ 
 }
 .re{
   margin: 1.4vh;
@@ -83,7 +97,6 @@ ul {
   background-color: #ffffff;
   color: #5d5c80;
 }
-
 .nyttKort{
   padding: 1vh;
   border-radius: 2px;
@@ -95,7 +108,14 @@ ul {
   font-size: 14px;
   position: center;
 }
-.nyListe{
+.rowListe{ 
+  float: left;
+  width: 30vh;
+  margin-right: 2vh;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+}
+#nyListe{
   padding: 1vh;
   border-radius: 6px;
   background-color: #f6f8fc;
@@ -105,6 +125,7 @@ ul {
   color: #5d5c80;
   font-size: 14px;
   position: center;
+  border-top: 0;
 }
 
 .LoginInput{
@@ -220,4 +241,11 @@ ul {
   float: right;
   margin-top: -1vh;
   margin-right: -0.2vh;
+}
+#editRow{
+  color: rgba(50, 115, 220, 0.5);
+  float: right;
+  margin-top: 0.6vh;
+  margin-right: 1.5vh;  
+  font-size: 18px;
 }
