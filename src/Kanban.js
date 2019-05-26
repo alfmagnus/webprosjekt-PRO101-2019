@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import SharedGroup from './shared-group';
-import Moment from 'react-moment';
-import 'moment-timezone';
 import firebase, { auth } from "./firebase.js";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import './App.css';
@@ -79,8 +77,8 @@ class App extends React.Component {
             onChange={this.handleChange}
             value={this.state.navnKort}
           />
-          <button className="loggut" id="leggtilKort"> Legg til</button>
-          <button onClick={this.ToggleNyttKort} className="loggut" id="leggtilKortAvbryt">X</button>
+          <button className="btnBasic" id="leggtilKort"> Legg til</button>
+          <button onClick={this.ToggleNyttKort} className="btnBasic" id="leggtilKortAvbryt">X</button>
           </form>
           
         </div>
@@ -112,7 +110,7 @@ class App extends React.Component {
         <div>
           <header className="App-header">
             <h3>webprosjekt</h3>
-            <button className="loggut" onClick={this.logout}>Logout</button>
+            <button className="btnBasic" id="loggut" onClick={this.logout}>Logout</button>
           </header>
           <main className="Main">
           <div className="KanbanBox">
@@ -140,6 +138,7 @@ class App extends React.Component {
                         <SharedGroup items={[
                         <div>
                           <div className="KortNavn">{item.title}</div>
+                          <div id="KortSlettDiv"><button className="btnBasic" id="KortSlett"><i className="fas fa-trash"/></button></div>
                           <div className="KortLagtTil">{this.unixToTime(item.creation)}</div>
                         </div>]}/>
                       </li>

@@ -30,7 +30,7 @@ h3{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.loggut{
+.btnBasic{
   border-radius: 2px;
   background-color: rgb(212, 136, 152);
   cursor: pointer;
@@ -39,10 +39,14 @@ h3{
   color: #fff;
   font-size: 12px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  padding: 0.6vh;
+  padding: 0.6vh; 
+}
+
+#loggut{
   right: 2vh;
   position: absolute;
 }
+
 ul {
   list-style: none;
   display: inline;
@@ -194,7 +198,18 @@ ul {
 }
 .KortNavn{
   font-size: 20px;
+  display: inline;
 }
 .KortLagtTil{
   font-size: 14px;
+}
+#KortSlett{
+  min-width: 2.5vh;
+  font-size: 1.1vh;
+}
+
+#KortSlettDiv{
+  display: inline;
+  float: right;
+  margin-top: -0.2vh;
 }

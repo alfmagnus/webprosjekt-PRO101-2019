@@ -8,3 +8,6 @@ npm install:
 - sortablejs
 - material-ui/core
 - Moment.js - react-moment
+
+
++ font-awesome
