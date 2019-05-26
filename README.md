@@ -7,3 +7,4 @@ npm install:
 - firebase
 - sortablejs
 - material-ui/core
+- Moment.js - react-moment

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import SharedGroup from './shared-group';
-import firebase from './firebase';
+import Moment from 'react-moment';
+import 'moment-timezone';
+import firebase, { auth } from "./firebase.js";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import './App.css';
 
@@ -8,25 +10,72 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-          pro: false
-        }
+          navnKort: "",
+          pro: false,
+          items: []
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
         this.logout = this.logout.bind(this);
     }
+
     logout() {
         firebase.auth().signOut();
+    }
+
+    handleChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+
+    handleSubmit(e) {
+      e.preventDefault();
+      const itemsRef = firebase.database().ref('items');
+      const item = {
+        title: this.state.navnKort,
+      }
+      itemsRef.push(item);
+      this.setState({
+        navnKort: ''
+      });
+    }
+
+    componentDidMount() {
+      const itemsRef = firebase.database().ref('items');
+      itemsRef.on('value', (snapshot) => {
+        let items = snapshot.val();
+        let newState = [];
+        for (let item in items) {
+          newState.push({
+            id: item,
+            title: items[item].title,
+            user: items[item].user
+          });
+        }
+        this.setState({
+          items: newState
+        });
+      });
     }
 
     inputKortRender() {
       return (
         <div className="inputKort1">
+          <form onSubmit={this.handleSubmit}>
           <input
+            name="navnKort"
             className="inputKort"
             type="text"
             placeholder="Nytt kort"
+            onChange={this.handleChange}
+            value={this.state.navnKort}
           />
           <button className="loggut" id="leggtilKort"> Legg til</button>
-          <button onClick={this.onCl} className="loggut" id="leggtilKortAvbryt">X</button>
+          </form>
+          <button onClick={this.ToggleNyttKort} className="loggut" id="leggtilKortAvbryt">X</button>
         </div>
       );
     }
@@ -34,18 +83,22 @@ class App extends React.Component {
     btnKortRender() {
       return (
         <div>
-          <button onClick={this.onCl} className="nyttKort"> Legg til Kort</button>
+          <button onClick={this.ToggleNyttKort} className="nyttKort"> Legg til Kort</button>
         </div>
       );
     }
 
-    onCl = () => {
+    ToggleNyttKort = () => {
       if(!this.state.pro){
       this.setState({
         pro: true
-      });} else {this.setState({
+      });
+      } 
+      else{this.setState({
         pro: false
-      });}}
+      });
+      }
+    }
 
     render() {
       return (
@@ -73,9 +126,19 @@ class App extends React.Component {
 
             <div className="row">
               <h1 className="row-header">TODO test123</h1>
-              <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']}/>
-              
-
+              <section className='display-item'>
+                <div className="wrapper">
+                  <ul>
+                  {this.state.items.map((item) => {
+                    return (
+                      <li key={item.id}>
+                        <SharedGroup items={[item.title]}/>
+                      </li>
+                    )
+                  })}
+                  </ul>
+                </div>
+              </section>
             </div>
 
             <div className="row">
