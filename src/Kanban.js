@@ -36,11 +36,17 @@ class App extends React.Component {
       const itemsRef = firebase.database().ref('items');
       const item = {
         title: this.state.navnKort,
+        creation: Date.now()
       }
       itemsRef.push(item);
       this.setState({
         navnKort: ''
       });
+    }
+
+    unixToTime(timecode) {
+      var timeVar = new Date(timecode);
+      return timeVar.toLocaleString();
     }
 
     componentDidMount() {
@@ -52,7 +58,7 @@ class App extends React.Component {
           newState.push({
             id: item,
             title: items[item].title,
-            user: items[item].user
+            creation: items[item].creation
           });
         }
         this.setState({
@@ -133,7 +139,9 @@ class App extends React.Component {
                     return (
                       <li key={item.id}>
                         <SharedGroup items={[item.title]}/>
+                        {this.unixToTime(item.creation)}
                       </li>
+                      
                     )
                   })}
                   </ul>
