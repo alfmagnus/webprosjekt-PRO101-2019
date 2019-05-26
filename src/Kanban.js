@@ -80,8 +80,9 @@ class App extends React.Component {
             value={this.state.navnKort}
           />
           <button className="loggut" id="leggtilKort"> Legg til</button>
-          </form>
           <button onClick={this.ToggleNyttKort} className="loggut" id="leggtilKortAvbryt">X</button>
+          </form>
+          
         </div>
       );
     }
@@ -125,9 +126,7 @@ class App extends React.Component {
             <div className="row">
               <h1 className="row-header">TODO test1</h1>
               <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach', 'Orange', 'Pear', 'Peach']}/>
-              {this.state.pro === false
-                    ? this.btnKortRender()
-                    : this.inputKortRender()}
+              
             </div>
 
             <div className="row">
@@ -138,15 +137,21 @@ class App extends React.Component {
                   {this.state.items.map((item) => {
                     return (
                       <li key={item.id}>
-                        <SharedGroup items={[item.title]}/>
-                        {this.unixToTime(item.creation)}
+                        <SharedGroup items={[
+                        <div>
+                          <div className="KortNavn">{item.title}</div>
+                          <div className="KortLagtTil">{this.unixToTime(item.creation)}</div>
+                        </div>]}/>
                       </li>
-                      
                     )
                   })}
                   </ul>
                 </div>
               </section>
+              {this.state.pro === false
+                    ? this.btnKortRender()
+                    : this.inputKortRender()
+              }
             </div>
 
             <div className="row">

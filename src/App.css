@@ -192,3 +192,9 @@ ul {
   right: 1vh;
   min-width: 3vh;
 }
+.KortNavn{
+  font-size: 20px;
+}
+.KortLagtTil{
+  font-size: 14px;
+}
