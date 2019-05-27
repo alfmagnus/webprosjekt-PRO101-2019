@@ -12,10 +12,15 @@ const SharedGroup = ({ items }) => {
             options={{
                 group: 'shared',
                 animation: 150
+
             }}
             tag="ul"
+
+
+            
         >
             {items}
+                
         </Sortable>
     );
 };

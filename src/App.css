@@ -23,9 +23,15 @@
   font-size: calc(1px + 2vmin);
   color: white;
 }
-
+h1{
+  color: gray;
+}
+h2{
+  color: gray;
+}
 h3{
   font-size: 16px;
+  color: gray;
   font-weight: 400;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -80,11 +86,12 @@ ul {
 }
 
 .row h1{
-  font-size: 15px;
+  font-size: 17px;
   margin-left: 2vh;
   display: inline;
   align-items: left;
   color: #818b98;
+  font-weight: 600;
 }
 #rowHeader{
   margin-top: 1vh;
