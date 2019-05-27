@@ -13,6 +13,7 @@ class App extends React.Component {
     super();
     this.state = {
       navnKort: "",
+      velgPri: "",
       NyttKortBtn: false,
       items: []
     };

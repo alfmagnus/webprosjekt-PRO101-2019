@@ -225,11 +225,14 @@ ul {
   min-width: 3vh;
 }
 .KortNavn{
-  font-size: 20px;
+  font-size: 21px;
+  padding-left: 0.4vh;
   display: inline;
 }
 .KortLagtTil{
-  font-size: 14px;
+  font-size: 11px;
+  padding-left: 0.4vh;
+  margin-top: 0.5vh;
 }
 #KortSlett{
   min-width: 2.5vh;
@@ -246,8 +249,8 @@ ul {
 #KortSlettDiv{
   display: inline;
   float: right;
-  margin-top: -1vh;
-  margin-right: -0.2vh;
+  margin-top: -3.5vh;
+  margin-right: ;
 }
 #editRow{
   color: rgba(50, 115, 220, 0.5);
@@ -255,4 +258,17 @@ ul {
   margin-top: 0.6vh;
   margin-right: 1.5vh;  
   font-size: 18px;
+}
+.PrioriteringBox{
+  font-size: 12px;
+  background-color: #77e677;
+  width: 12vh;
+  margin: 0.2vh;
+  border-radius: 2px;
+  height: 2.25vh;
+  
+}
+#PrioriteringText{
+  margin-left: 0.8vh;
+  padding-top: 0.1vh;
 }
