@@ -10,9 +10,7 @@ class ListElement extends Component {
     return (
       <li key={this.props.item.id}>
         <div className="re">
-            <div className="PrioriteringBox">
-                <div id="PrioriteringText">{this.props.item.priStatus}</div>
-            </div>
+            {this.props.renderImportance(this.props.item.priStatus)}
             <div id="KortSlettDiv">
             <button
               className="btnBasic"

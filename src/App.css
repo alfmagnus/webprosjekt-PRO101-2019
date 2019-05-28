@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  
 }
 
 .App-header {
@@ -52,12 +52,17 @@ h3{
   right: 2vh;
   position: absolute;
 }
-
 ul {
   list-style: none;
   display: inline;
   padding: 0;
+  overflow-x: auto;
+  width: auto;
 }
+li{
+
+}
+
 .KanbanBox{
   min-height: 84vh;
   min-width: 96vw;
@@ -272,4 +277,9 @@ ul {
 #PrioriteringText{
   margin-left: 0.8vh;
   padding-top: 0.1vh;
+  color: rgb(90, 99, 129);
+}
+.ghost {
+  opacity: .5;
+  background: #C8EBFB;
 }

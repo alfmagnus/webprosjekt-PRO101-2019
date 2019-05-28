@@ -18,6 +18,8 @@ class App extends React.Component {
       items: []
     };
 
+    this.Text = this.Text.bind(this);
+    this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -51,6 +53,32 @@ class App extends React.Component {
     this.setState({
       NyListeBtn: false
     });
+  }
+  
+  renderImportance(firebase){
+    if(firebase == "low"){
+      return( 
+      this.Text("Lowtest", "#37ecba")
+      )
+    }
+    if(firebase == "medium"){
+      return(
+        this.Text("Medium", "#f9f586")
+        )
+    }
+    if(firebase == "high"){
+      return(
+        this.Text("High", "#f5576c")
+        )
+    }
+  }
+  Text(pri, color2){
+    return(
+      <div className="PrioriteringBox" style={{backgroundColor: String(color2)}}>
+        {console.log(color2)}
+        <div id="PrioriteringText">{pri}</div>
+      </div>
+    )
   }
 
   unixToTime(timeCreationFire) {
@@ -130,7 +158,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <header className="App-header">
           <h3>webprosjekt</h3>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
@@ -143,6 +171,15 @@ class App extends React.Component {
 
               {this.state.items.map(liste => {
                 return (  
+                  <Sortable
+                        options={{
+                          group: "liste",
+                          animation: 150,
+                          direction: 'horizontal',
+                          handle: "#rowHeader",
+                          ghostClass: 'ghost',
+                        }}
+                      >
                   <li>
                     <div className="row">
                       <div id="rowHeader">
@@ -156,7 +193,7 @@ class App extends React.Component {
                         }}
                       >
                         {liste.elements.map(item => {
-                          return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} />;
+                          return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
                         })}
                       </Sortable>
                       {console.log(liste)}
@@ -167,6 +204,7 @@ class App extends React.Component {
                       </div>
                     </div>
                   </li>
+                  </Sortable>
                 );
               })}
             </ul>
