@@ -26,6 +26,8 @@ class ListElement extends Component {
           <div className="KortLagtTil">{this.props.unixToTime(this.props.item.creation)}</div>
         </div>
       </li>
+      
+
     );
   }
 }

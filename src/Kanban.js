@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import SharedGroup from "./shared-group";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
-
 import Sortable from "react-sortablejs";
+
+
 var db = firebase.firestore();
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      navnKort: "",
+      nyListe: "",
       velgPri: "",
-      NyttKortBtn: false,
+      NyListeBtn: false,
       items: []
     };
 
@@ -36,7 +36,7 @@ class App extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.navnKort === "") {
+    if (this.state.nyListe === "") {
       return;
     }
     const db = firebase.firestore();
@@ -44,13 +44,12 @@ class App extends React.Component {
       timestampsInSnapshots: true
     });
     const itemsRef = db.collection("Kanban").add({
-      elements: {
-        title: this.state.navnKort,
-        creation: Date.now()
-      }
+        name: this.state.nyListe,
+        elements:[]
+      
     });
     this.setState({
-      NyttKortBtn: false
+      NyListeBtn: false
     });
   }
 
@@ -62,22 +61,14 @@ class App extends React.Component {
   componentDidMount = () => {
     db.collection("Kanban").onSnapshot(snapshot => {
       let newState = [];
-      let index = 0;
-
       snapshot.forEach(function(doc) {
         newState.push(
           doc.data()
-          // name: doc.data().name,
-          // title: doc.data().elements,
-          // creation: doc.data().elements[0].creation
         );
       });
-
       this.setState({
         items: newState
       });
-
-      console.log(newState);
     });
   };
 
@@ -91,12 +82,12 @@ class App extends React.Component {
       <div className="inputKort1">
         <form onSubmit={this.handleSubmit}>
           <input
-            name="navnKort"
+            name="nyListe"
             className="inputKort"
             type="text"
-            placeholder="Nytt kort"
+            placeholder="legg til ny liste"
             onChange={this.handleChange}
-            value={this.state.navnKort}
+            value={this.state.nyListe}
           />
           <button className="btnBasic" id="leggtilKort">
             {" "}
@@ -114,25 +105,25 @@ class App extends React.Component {
     );
   }
 
-  btnKortRender() {
+  btnListRender() {
     return (
       <div>
         <button onClick={this.ToggleNyttKort} className="nyttKort">
           {" "}
-          Legg til Kort
+          Legg til Liste
         </button>
       </div>
     );
   }
 
   ToggleNyttKort = () => {
-    if (!this.state.NyttKortBtn) {
+    if (!this.state.NyListeBtn) {
       this.setState({
-        NyttKortBtn: true
+        NyListeBtn: true
       });
     } else {
       this.setState({
-        NyttKortBtn: false
+        NyListeBtn: false
       });
     }
   };
@@ -168,18 +159,22 @@ class App extends React.Component {
                           return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} />;
                         })}
                       </Sortable>
-
-                      {this.state.NyttKortBtn === false
-                        ? this.btnKortRender()
-                        : this.inputKortRender()}
+                      {console.log(liste)}
+                      <div>
+                        <button className="nyttKort">
+                          Legg til Kort
+                        </button>
+                      </div>
                     </div>
                   </li>
                 );
               })}
             </ul>
             <div className="rowListe">
-              <button id="nyListe">Legg til liste</button>
-              {console.log(this.state)}
+              {this.state.NyListeBtn === false
+                ? this.btnListRender()
+                : this.inputKortRender()
+              }
             </div>
           </div>
         </main>

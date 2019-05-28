@@ -95,7 +95,7 @@ ul {
 }
 #rowHeader{
   margin-top: 1vh;
- 
+  margin-bottom: 1vh;
 }
 .re{
   margin: 1.4vh;
@@ -201,6 +201,7 @@ ul {
   width: 24.2vh;
   font-size:16px;
   color: #fff;
+  margin-top: 1vh;
   margin-bottom: 1vh;
   border: none;
   background: #c8d4e6;
