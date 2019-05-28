@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import Swal from 'sweetalert2'
 import "./App.css";
 import Sortable from "react-sortablejs";
-
 
 var db = firebase.firestore();
 
@@ -22,7 +21,6 @@ class App extends React.Component {
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
     this.logout = this.logout.bind(this);
   }
 
@@ -55,41 +53,11 @@ class App extends React.Component {
     });
   }
   
-  renderImportance(firebase){
-    if(firebase == "low"){
-      return( 
-      this.Text("Lowtest", "#37ecba")
-      )
-    }
-    if(firebase == "medium"){
-      return(
-        this.Text("Medium", "#f9f586")
-        )
-    }
-    if(firebase == "high"){
-      return(
-        this.Text("High", "#f5576c")
-        )
-    }
-  }
-  Text(pri, color2){
-    return(
-      <div className="PrioriteringBox" style={{backgroundColor: String(color2)}}>
-        {console.log(color2)}
-        <div id="PrioriteringText">{pri}</div>
-      </div>
-    )
-  }
-
-  unixToTime(timeCreationFire) {
-    var time = new Date(timeCreationFire);
-    return time.toLocaleString();
-  }
-
   componentDidMount = () => {
     db.collection("Kanban").onSnapshot(snapshot => {
       let newState = [];
       snapshot.forEach(function(doc) {
+        console.log(doc.id)
         newState.push(
           doc.data()
         );
@@ -99,6 +67,40 @@ class App extends React.Component {
       });
     });
   };
+
+  renderImportance(firebase){
+    if(firebase == "low"){
+      return this.Text("Low", "#79c5fa")
+    }
+    if(firebase == "medium"){
+      return this.Text("Medium", "#fac879")
+    }
+    if(firebase == "high"){
+      return this.Text("High", "#fa7979")
+    }
+  }
+  Text(pri, color2){
+    return(
+      <button 
+        className="PrioriteringBox" 
+        style={{backgroundColor: String(color2)}} 
+        onClick={() => {
+          this.changeImportance();
+        }}
+      >
+        <div id="PrioriteringText">{pri}</div>
+      </button>
+    )
+  }
+
+  changeImportance(){
+    Swal.fire("Testing")
+  }
+
+  unixToTime(timeCreationFire) {
+    var time = new Date(timeCreationFire);
+    return time.toLocaleString();
+  }
 
   removeItem(itemId) {
     const itemRef = firebase.database().ref(`/items/${itemId}`);
@@ -196,7 +198,7 @@ class App extends React.Component {
                           return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
                         })}
                       </Sortable>
-                      {console.log(liste)}
+                      
                       <div>
                         <button className="nyttKort">
                           Legg til Kort

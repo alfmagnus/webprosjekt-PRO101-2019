@@ -255,8 +255,6 @@ li{
 #KortSlettDiv{
   display: inline;
   float: right;
-  margin-top: -3.5vh;
-  margin-right: ;
 }
 #editRow{
   color: rgba(50, 115, 220, 0.5);
@@ -268,18 +266,20 @@ li{
 .PrioriteringBox{
   font-size: 12px;
   background-color: #77e677;
-  width: 12vh;
-  margin: 0.2vh;
+  width: 7vh;
   border-radius: 2px;
   height: 2.25vh;
-  
+  border: none;
 }
 #PrioriteringText{
-  margin-left: 0.8vh;
   padding-top: 0.1vh;
-  color: rgb(90, 99, 129);
+  color: #fff;
+  
 }
 .ghost {
   opacity: .5;
   background: #C8EBFB;
+}
+.kortTopRow{
+  margin-top: -0.5vh;
 }

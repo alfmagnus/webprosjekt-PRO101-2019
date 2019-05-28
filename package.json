@@ -16,6 +16,7 @@
     "react-scripts": "3.0.1",
     "react-sortablejs": "^1.5.1",
     "sortablejs": "^1.9.0",
+    "sweetalert2": "^8.11.6",
     "uniqid": "^5.0.3"
   },
   "scripts": {
