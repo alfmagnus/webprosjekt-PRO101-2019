@@ -14,7 +14,9 @@ class App extends React.Component {
       nyListe: "",
       velgPri: "",
       NyListeBtn: false,
-      items: []
+      items: [],
+      items2: []
+
     };
 
     this.Text = this.Text.bind(this);
@@ -59,10 +61,26 @@ class App extends React.Component {
           doc.data()
         );
       });
+      console.log(snapshot)
       this.setState({
         items: newState
       });
     });
+    //testing
+
+    db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").onSnapshot(snapshot => {
+      let newState2 = [];
+      snapshot.forEach(function(doc) {
+        newState2.push(
+          doc.data()
+        );
+      });
+      console.log(snapshot)
+      this.setState({
+        items2: newState2
+      });
+    });
+
   };
 
   renderImportance(firebase, id){
@@ -103,20 +121,16 @@ class App extends React.Component {
     })
     //testing
     if (priPush == "Low") {
-      db.collection("Kanban").add({
-        priStatus: "low"
-    });
+      console.log("priStatus: Endret til low")
     }
     //testing
     if (priPush == "Medium") {
-      db.collection("Kanban").add({
-        priStatus: "medium"
-    });
+      console.log("priStatus: Endret til medium");
     }
     //testing
     if (priPush == "High") {
       db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").doc("8RaR0jiEnXljSaEH6Jbz").update({
-        priStatus: "medtes"
+        priStatus: "bbbb"
     });
     }
   }
@@ -195,9 +209,9 @@ class App extends React.Component {
         <main className="Main">
           <div className="KanbanBox">
             <ul>
-
               {this.state.items.map(liste => {
-                return (  
+                return ( 
+                  
                   <Sortable
                         options={{
                           group: "liste",
@@ -207,7 +221,7 @@ class App extends React.Component {
                           ghostClass: "ghost",
                         }}
                       >
-                  <li>
+                  <li> 
                     <div className="row">
                       <div id="rowHeader">
                         <h1>{liste.name}</h1>
@@ -310,3 +324,9 @@ export default App;
                                 </li>
                               )
                           })}              */}
+
+ {/*
+      
+
+
+*/}
