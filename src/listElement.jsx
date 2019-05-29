@@ -8,10 +8,11 @@ class ListElement extends Component {
   }
   render() {
     return (
+      <div>
       <li key={this.props.item.id}>
         <div className="re">
           <div className="kortTopRow">
-            {this.props.renderImportance(this.props.item.priStatus)}
+            {this.props.renderImportance(this.props.item.priStatus, this.props.item.id)}
             <div id="KortSlettDiv">
               <button
                 className="btnBasic"
@@ -27,6 +28,9 @@ class ListElement extends Component {
           <div className="KortLagtTil">{this.props.unixToTime(this.props.item.creation)}</div>
         </div>
       </li>
+      {console.log(this.props.item)}
+      </div>
+
       
 
     );

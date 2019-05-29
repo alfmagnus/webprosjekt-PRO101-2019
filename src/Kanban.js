@@ -39,14 +39,12 @@ class App extends React.Component {
     if (this.state.nyListe === "") {
       return;
     }
-    const db = firebase.firestore();
     db.settings({
       timestampsInSnapshots: true
     });
-    const itemsRef = db.collection("Kanban").add({
+    db.collection("Kanban").add({
         name: this.state.nyListe,
         elements:[]
-      
     });
     this.setState({
       NyListeBtn: false
@@ -57,7 +55,6 @@ class App extends React.Component {
     db.collection("Kanban").onSnapshot(snapshot => {
       let newState = [];
       snapshot.forEach(function(doc) {
-        console.log(doc.id)
         newState.push(
           doc.data()
         );
@@ -68,24 +65,24 @@ class App extends React.Component {
     });
   };
 
-  renderImportance(firebase){
+  renderImportance(firebase, id){
     if(firebase == "low"){
-      return this.Text("Low", "#79c5fa")
+      return this.Text("Low", "#79c5fa", id)
     }
     if(firebase == "medium"){
-      return this.Text("Medium", "#fac879")
+      return this.Text("Medium", "#fac879", id)
     }
     if(firebase == "high"){
-      return this.Text("High", "#fa7979")
+      return this.Text("High", "#fa7979", id)
     }
   }
-  Text(pri, color2){
+  Text(pri, color2, id){
     return(
       <button 
         className="PrioriteringBox" 
         style={{backgroundColor: String(color2)}} 
         onClick={() => {
-          this.changeImportance();
+          this.changeImportance(pri, id);
         }}
       >
         <div id="PrioriteringText">{pri}</div>
@@ -93,8 +90,35 @@ class App extends React.Component {
     )
   }
 
-  changeImportance(){
-    Swal.fire("Testing")
+  async changeImportance(pri, id){
+    const {value: priPush} = await Swal.fire({
+      title: "Velg prioritet på kortet",
+      input: "radio",
+      inputValue: pri,
+      inputOptions: {
+        "Low": "Lav",
+        "Medium": "Medium",
+        "High": "Høy"
+      }
+    })
+    //testing
+    if (priPush == "Low") {
+      db.collection("Kanban").add({
+        priStatus: "low"
+    });
+    }
+    //testing
+    if (priPush == "Medium") {
+      db.collection("Kanban").add({
+        priStatus: "medium"
+    });
+    }
+    //testing
+    if (priPush == "High") {
+      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").doc("8RaR0jiEnXljSaEH6Jbz").update({
+        priStatus: "medtes"
+    });
+    }
   }
 
   unixToTime(timeCreationFire) {
@@ -102,6 +126,7 @@ class App extends React.Component {
     return time.toLocaleString();
   }
 
+  //Må oppdateres til Firestore
   removeItem(itemId) {
     const itemRef = firebase.database().ref(`/items/${itemId}`);
     itemRef.remove();
@@ -177,9 +202,9 @@ class App extends React.Component {
                         options={{
                           group: "liste",
                           animation: 150,
-                          direction: 'horizontal',
+                          direction: "horizontal",
                           handle: "#rowHeader",
-                          ghostClass: 'ghost',
+                          ghostClass: "ghost",
                         }}
                       >
                   <li>
@@ -198,7 +223,6 @@ class App extends React.Component {
                           return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
                         })}
                       </Sortable>
-                      
                       <div>
                         <button className="nyttKort">
                           Legg til Kort
