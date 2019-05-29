@@ -231,18 +231,20 @@ li{
   min-width: 3vh;
 }
 .KortNavn{
-  font-size: 21px;
+  font-size: 24px;
   padding-left: 0.4vh;
-  display: inline;
+  margin-top: 0.5vh;
 }
 .KortLagtTil{
   font-size: 11px;
   padding-left: 0.4vh;
-  margin-top: 0.5vh;
+  display: inline;
 }
 #KortSlett{
-  min-width: 2.5vh;
-  font-size: 1.1vh;
+  display: inline;
+  float: right;
+  min-width: 3vh;
+  font-size: 1.5vh;
   color: rgba(50, 115, 220, 0.3);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: transparent;
@@ -251,22 +253,43 @@ li{
   background-color: #df5050;
   color: #fff;
 }
-
-#KortSlettDiv{
+.KortDivBottom{
+  margin-top: -3vh;
+}
+#KortEdit{
   display: inline;
   float: right;
+  min-width: 2.5vh;
+  font-size: 1.5vh;
+  color: rgba(50, 115, 220, 0.3);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  background-color: transparent;
 }
-#editRow{
-  color: rgba(50, 115, 220, 0.5);
+#KortEdit:hover{
+  background-color: #508edf;
+  color: #fff;
+}
+#ListeEdit{
+  display: inline;
   float: right;
-  margin-top: 0.6vh;
-  margin-right: 1.5vh;  
-  font-size: 18px;
+  margin-right: 1.2vh;
+  min-width: 2vh;
+  font-size: 2vh;
+  color: rgba(50, 115, 220, 0.3);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  background-color: transparent;
 }
+#ListeEdit:hover{
+  background-color: rgba(50, 115, 220, 0.3);
+  color: #fff;
+}
+
+
 .PrioriteringBox{
   font-size: 12px;
   background-color: #77e677;
   width: 7vh;
+  cursor: pointer;
   border-radius: 2px;
   height: 2.25vh;
   border: none;
@@ -274,7 +297,6 @@ li{
 #PrioriteringText{
   padding-top: 0.1vh;
   color: #fff;
-  
 }
 .ghost {
   opacity: .5;

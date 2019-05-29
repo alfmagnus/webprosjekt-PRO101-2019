@@ -15,6 +15,7 @@ class App extends React.Component {
       velgPri: "",
       NyListeBtn: false,
       items: [],
+      items1: [],
       items2: []
 
     };
@@ -66,6 +67,24 @@ class App extends React.Component {
         items: newState
       });
     });
+
+
+    //testing
+
+    db.collection("Kanban").onSnapshot(snapshot => {
+      let newState1 = [];
+      snapshot.forEach(function(doc) {
+        newState1.push(
+          [doc.id,doc.data()]
+        );
+      });
+      console.log(newState1)
+      this.setState({
+        items1: newState1
+      });
+    });
+
+    
     //testing
 
     db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").onSnapshot(snapshot => {
@@ -75,7 +94,7 @@ class App extends React.Component {
           doc.data()
         );
       });
-      console.log(snapshot)
+      
       this.setState({
         items2: newState2
       });
@@ -131,6 +150,38 @@ class App extends React.Component {
     if (priPush == "High") {
       db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").doc("8RaR0jiEnXljSaEH6Jbz").update({
         priStatus: "bbbb"
+    });
+    }
+  }
+
+  async editKortText(){
+    const {value: text} = await Swal.fire({
+      title: 'Endre navn på kortet',
+      input: 'text',
+      inputPlaceholder: 'Skriv inn navn her...',
+      showCancelButton: true
+    })
+    
+    if (text) {
+      Swal.fire(text)
+      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
+        name: text
+    });
+    }
+  }
+
+  async editListeText(){
+    const {value: text} = await Swal.fire({
+      title: 'Endre navn på listen',
+      input: 'text',
+      inputPlaceholder: 'Skriv inn navn her...',
+      showCancelButton: true
+    })
+    
+    if (text) {
+      Swal.fire(text)
+      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
+        name: text
     });
     }
   }
@@ -211,21 +262,24 @@ class App extends React.Component {
             <ul>
               {this.state.items.map(liste => {
                 return ( 
-                  
                   <Sortable
-                        options={{
-                          group: "liste",
-                          animation: 150,
-                          direction: "horizontal",
-                          handle: "#rowHeader",
-                          ghostClass: "ghost",
-                        }}
-                      >
+                    options={{
+                      group: "liste",
+                      animation: 150,
+                      direction: "horizontal",
+                      handle: "#rowHeader",
+                      ghostClass: "ghost",
+                    }}
+                  >
                   <li> 
                     <div className="row">
                       <div id="rowHeader">
                         <h1>{liste.name}</h1>
-                        <i class="fas fa-ellipsis-v" id="editRow" />
+                        <button className="btnBasic" id="ListeEdit"
+                          onClick={() => this.editListeText()}
+                        >
+                          <i class="fas fa-ellipsis-v"/>
+                        </button>
                       </div>
                       <Sortable
                         options={{
@@ -234,7 +288,7 @@ class App extends React.Component {
                         }}
                       >
                         {liste.elements.map(item => {
-                          return <ListElement item={item} removeItem={this.removeItem} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
+                          return <ListElement item={item} removeItem={this.removeItem} editKortText={this.editKortText} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
                         })}
                       </Sortable>
                       <div>
