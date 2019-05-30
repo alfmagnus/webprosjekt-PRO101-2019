@@ -1,5 +1,5 @@
 .App {
-  
+
 }
 
 .App-header {
@@ -45,7 +45,7 @@ h3{
   color: #fff;
   font-size: 12px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  padding: 0.6vh; 
+  padding: 0.6vh;
 }
 
 #loggut{
@@ -72,7 +72,7 @@ li{
   display: table;
   clear: both;
 }
-.row{ 
+.row{
   float: left;
   width: 30vh;
   margin-right: 2vh;
@@ -120,7 +120,7 @@ li{
   font-size: 14px;
   position: center;
 }
-.rowListe{ 
+.rowListe{
   float: left;
   width: 30vh;
   margin-right: 2vh;
@@ -216,6 +216,29 @@ li{
 .inputKort1{
   text-align: center
 }
+.editKort{
+  padding: 1vh;
+  border-radius: 2px;
+  background-color: rgb(220, 225, 233);
+  cursor: pointer;
+  border: 0;
+  min-width: 100%;
+  color: #818b98;
+  font-size: 14px;
+  position: center;
+}
+#nyEdit{
+  padding: 1vh;
+  border-radius: 6px;
+  background-color: #f6f8fc;
+  cursor: pointer;
+  border: 0;
+  min-width: 100%;
+  color: #5d5c80;
+  font-size: 14px;
+  position: center;
+  border-top: 0;
+}
 #leggtilKort{
   position: relative;
   background-color: rgb(98, 204, 98);
@@ -231,20 +254,18 @@ li{
   min-width: 3vh;
 }
 .KortNavn{
-  font-size: 24px;
+  font-size: 21px;
   padding-left: 0.4vh;
-  margin-top: 0.5vh;
+  display: inline;
 }
 .KortLagtTil{
   font-size: 11px;
   padding-left: 0.4vh;
-  display: inline;
+  margin-top: 0.5vh;
 }
 #KortSlett{
-  display: inline;
-  float: right;
-  min-width: 3vh;
-  font-size: 1.5vh;
+  min-width: 2.5vh;
+  font-size: 1.1vh;
   color: rgba(50, 115, 220, 0.3);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: transparent;
@@ -253,43 +274,51 @@ li{
   background-color: #df5050;
   color: #fff;
 }
-.KortDivBottom{
-  margin-top: -3vh;
-}
-#KortEdit{
+
+#KortSlettDiv{
   display: inline;
   float: right;
+}
+#KortEdit{
   min-width: 2.5vh;
-  font-size: 1.5vh;
+  font-size: 1.1vh;
   color: rgba(50, 115, 220, 0.3);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: transparent;
 }
 #KortEdit:hover{
-  background-color: #508edf;
+  background-color: #df5050;
   color: #fff;
 }
-#ListeEdit{
+
+#KortEditDiv{
   display: inline;
   float: right;
-  margin-right: 1.2vh;
-  min-width: 2vh;
-  font-size: 2vh;
-  color: rgba(50, 115, 220, 0.3);
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  background-color: transparent;
+  margin-top: 2.2vh;
+  margin-right: -2.7vh;
 }
-#ListeEdit:hover{
-  background-color: rgba(50, 115, 220, 0.3);
+.editKort{
+  width: 24.2vh;
+  font-size:16px;
   color: #fff;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  border: none;
+  background: #c8d4e6;
+  padding: 1.4vh;
+  border-radius: 4px;
 }
-
-
+#editRow{
+  color: rgba(50, 115, 220, 0.5);
+  float: right;
+  margin-top: 0.6vh;
+  margin-right: 1.5vh;
+  font-size: 18px;
+}
 .PrioriteringBox{
   font-size: 12px;
   background-color: #77e677;
   width: 7vh;
-  cursor: pointer;
   border-radius: 2px;
   height: 2.25vh;
   border: none;
@@ -297,6 +326,7 @@ li{
 #PrioriteringText{
   padding-top: 0.1vh;
   color: #fff;
+
 }
 .ghost {
   opacity: .5;
@@ -304,4 +334,7 @@ li{
 }
 .kortTopRow{
   margin-top: -0.5vh;
+}
+.editKort1 input{
+  width: 15vh;
 }

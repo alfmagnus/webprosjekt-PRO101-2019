@@ -12,19 +12,19 @@ class App extends React.Component {
     super();
     this.state = {
       nyListe: "",
+      name: "",
       velgPri: "",
       NyListeBtn: false,
       items: [],
-      items1: [],
-      items2: []
-
+      editTest: ""
     };
-
+    this.handleSubmit2 = this.handleSubmit2.bind(this);
     this.Text = this.Text.bind(this);
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.logout = this.logout.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   logout() {
@@ -32,8 +32,9 @@ class App extends React.Component {
   }
 
   handleChange(e) {
+    e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.props.editTest
     });
   }
 
@@ -53,6 +54,15 @@ class App extends React.Component {
       NyListeBtn: false
     });
   }
+
+    handleSubmit2(e) {
+        e.preventDefault();
+        db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
+            name: this.state.editTest
+        });
+        alert("BNISJDA");
+
+    }
   
   componentDidMount = () => {
     db.collection("Kanban").onSnapshot(snapshot => {
@@ -62,44 +72,10 @@ class App extends React.Component {
           doc.data()
         );
       });
-      console.log(snapshot)
       this.setState({
         items: newState
       });
     });
-
-
-    //testing
-
-    db.collection("Kanban").onSnapshot(snapshot => {
-      let newState1 = [];
-      snapshot.forEach(function(doc) {
-        newState1.push(
-          [doc.id,doc.data()]
-        );
-      });
-      console.log(newState1)
-      this.setState({
-        items1: newState1
-      });
-    });
-
-    
-    //testing
-
-    db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").onSnapshot(snapshot => {
-      let newState2 = [];
-      snapshot.forEach(function(doc) {
-        newState2.push(
-          doc.data()
-        );
-      });
-      
-      this.setState({
-        items2: newState2
-      });
-    });
-
   };
 
   renderImportance(firebase, id){
@@ -140,48 +116,20 @@ class App extends React.Component {
     })
     //testing
     if (priPush == "Low") {
-      console.log("priStatus: Endret til low")
+      db.collection("Kanban").add({
+        priStatus: "low"
+    });
     }
     //testing
     if (priPush == "Medium") {
-      console.log("priStatus: Endret til medium");
+      db.collection("Kanban").add({
+        priStatus: "medium"
+    });
     }
     //testing
     if (priPush == "High") {
       db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").doc("8RaR0jiEnXljSaEH6Jbz").update({
-        priStatus: "bbbb"
-    });
-    }
-  }
-
-  async editKortText(){
-    const {value: text} = await Swal.fire({
-      title: 'Endre navn på kortet',
-      input: 'text',
-      inputPlaceholder: 'Skriv inn navn her...',
-      showCancelButton: true
-    })
-    
-    if (text) {
-      Swal.fire(text)
-      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
-        name: text
-    });
-    }
-  }
-
-  async editListeText(){
-    const {value: text} = await Swal.fire({
-      title: 'Endre navn på listen',
-      input: 'text',
-      inputPlaceholder: 'Skriv inn navn her...',
-      showCancelButton: true
-    })
-    
-    if (text) {
-      Swal.fire(text)
-      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
-        name: text
+        priStatus: "medtes"
     });
     }
   }
@@ -196,6 +144,36 @@ class App extends React.Component {
     const itemRef = firebase.database().ref(`/items/${itemId}`);
     itemRef.remove();
   }
+
+  handleEdit(e) {
+      this.state.props({defaultValue: e.editTest
+      });
+  }
+/* editItemRender(itemId) {
+      const itemRef = firebase.database().ref(`/items/${itemId}`);
+      return (
+          <div className="editKort1">
+              <form>
+                 <input
+                      name="name"
+                      className="editKort"
+                      type="text"
+                      onChange={this.handleSubmit2}
+                      value={this.state.name}
+                />
+                <button
+                      type="button"
+                    onClick= {() => alert("Hello!")}
+                     >
+                    Hi
+                </button>
+                </form>
+            </div>
+        );
+  }
+  */
+
+
 
   inputKortRender() {
     return (
@@ -260,26 +238,23 @@ class App extends React.Component {
         <main className="Main">
           <div className="KanbanBox">
             <ul>
+
               {this.state.items.map(liste => {
-                return ( 
+                return (  
                   <Sortable
-                    options={{
-                      group: "liste",
-                      animation: 150,
-                      direction: "horizontal",
-                      handle: "#rowHeader",
-                      ghostClass: "ghost",
-                    }}
-                  >
-                  <li> 
+                        options={{
+                          group: "liste",
+                          animation: 150,
+                          direction: "horizontal",
+                          handle: "#rowHeader",
+                          ghostClass: "ghost",
+                        }}
+                      >
+                  <li>
                     <div className="row">
                       <div id="rowHeader">
                         <h1>{liste.name}</h1>
-                        <button className="btnBasic" id="ListeEdit"
-                          onClick={() => this.editListeText()}
-                        >
-                          <i class="fas fa-ellipsis-v"/>
-                        </button>
+                        <i class="fas fa-ellipsis-v" id="editRow" />
                       </div>
                       <Sortable
                         options={{
@@ -288,7 +263,7 @@ class App extends React.Component {
                         }}
                       >
                         {liste.elements.map(item => {
-                          return <ListElement item={item} removeItem={this.removeItem} editKortText={this.editKortText} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
+                          return <ListElement item={item} removeItem={this.removeItem}  handleEdit={this.handleEdit} handleChange={this.handleChange} handleSubmit2={this.handleSubmit2} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
                         })}
                       </Sortable>
                       <div>
@@ -378,9 +353,3 @@ export default App;
                                 </li>
                               )
                           })}              */}
-
- {/*
-      
-
-
-*/}
