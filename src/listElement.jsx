@@ -11,7 +11,7 @@ class ListElement extends Component {
       <div>
       <li key={this.props.item.id}>
         <div className="re">   
-            {this.props.renderImportance(this.props.item.priStatus, this.props.item.id)}
+            {this.props.renderImportance(this.props.item.priStatus, this.props.item.id, this.props.listId)}
             <button
               className="btnBasic"
               id="KortSlett"
