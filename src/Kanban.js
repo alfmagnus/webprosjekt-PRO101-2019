@@ -15,15 +15,16 @@ class App extends React.Component {
       velgPri: "",
       NyListeBtn: false,
       items: [],
-      items1: [],
-      items2: []
+      listElements: [],
+      ids: []
     };
-
     this.Text = this.Text.bind(this);
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.logout = this.logout.bind(this);
+    this.addNewCard = this.addNewCard.bind(this);
+    this.editKortText = this.editKortText.bind(this);
   }
 
   logout() {
@@ -61,38 +62,20 @@ class App extends React.Component {
     });
   }
 
-
   componentDidMount = () => {
     db.collection("Kanban").onSnapshot(snapshot => {
       let newState = [];
+      let ids = [];
       snapshot.forEach(function(doc) {
         newState.push(doc.data());
+        ids.push(doc.id);
       });
       this.setState({
-        items: newState
+        items: newState,
+        ids: ids
       });
     });
-    
-    
   };
- //Testing
-  testTestt (listeId) {
-    db.collection("Kanban")
-    .doc(listeId)
-    .collection("secElements")
-    .onSnapshot(snapshot => {
-      let newState = [];
-      snapshot.forEach(function(doc) {
-        newState.push(
-        newState[listeId] = doc.data());
-      });
-      console.log(newState)
-      ;
-      this.setState({
-        items: newState
-      });
-    });
-  }
 
   renderImportance(firebase, id, listId) {
     if (firebase == "low") {
@@ -144,7 +127,7 @@ class App extends React.Component {
     }
   }
   
-  async editKortText() {
+  async editKortText(listeId, kortId) {
     const { value: text } = await Swal.fire({
       title: "Endre navn på kortet",
       input: "text",
@@ -153,12 +136,24 @@ class App extends React.Component {
     });
 
     if (text) {
-      Swal.fire(text);
-      db.collection("Kanban")
-        .doc("lir2tyj2m84KFPS8IThx")
-        .update({
-          name: text
-        });
+      let temp = this.state.items;
+      for (let liste in temp) {
+        if (temp[liste].id == listeId) {
+          for (let card in temp[liste].elements) {
+            if (temp[liste].elements[card].id == kortId) {
+              temp[liste].elements[card].title = text;
+              this.setState({
+                items: temp
+              });
+              db.collection("Kanban")
+                .doc(listeId)
+                .update({
+                  elements: temp[liste].elements
+                });
+            }
+          }
+        }
+      }
     }
   }
 
@@ -251,27 +246,14 @@ class App extends React.Component {
     });
 
     if (text && listeId) {
+      let card = { title: text, pri: "", creation: Date.now(), id: Date.now() };
       db.collection("Kanban")
         .doc(listeId)
-        .collection("secElements")
-        .add({
-          title: text,
-          pri: "",
-          creation: Date.now(),
-          id: ""
-        })
-        .then(resolved => {
-          db.collection("Kanban")
-            .doc(listeId)
-            .collection("secElements")
-            .doc(resolved.id)
-            .update({
-              id: resolved.id
-            });
+        .update({
+          elements: firebase.firestore.FieldValue.arrayUnion(card)
         });
     }
   }
-
   render() {
     return (
       <div className="App">
@@ -285,7 +267,6 @@ class App extends React.Component {
           <div className="KanbanBox">
             <ul>
               {this.state.items.map(liste => {
-                  
                 return (
                   <Sortable
                     options={{
@@ -315,8 +296,6 @@ class App extends React.Component {
                             animation: 150
                           }}
                         >
-                          
-                          {this.testTestt(liste.id)}
                           {liste.elements.map(item => {
                             return (
                               <ListElement
@@ -328,7 +307,6 @@ class App extends React.Component {
                                 renderImportance={this.renderImportance}
                               />
                             );
-                            
                           })}
                         </Sortable>
                         <div>
@@ -360,4 +338,3 @@ class App extends React.Component {
 export default App;
 
 //mal sudo
-
