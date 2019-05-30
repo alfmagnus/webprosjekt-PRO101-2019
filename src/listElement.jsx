@@ -9,9 +9,9 @@ class ListElement extends Component {
   render() {
     return (
       <div>
-      <li key={this.props.item.id}>
-        <div className="re">   
-            {this.props.renderImportance(this.props.item.priStatus, this.props.item.id)}
+      <li key={this.props.item.title}>
+        <div className="re">
+            {this.props.renderImportance(this.props.priStatus, this.props.item.id, this.props.listId)}
             <button
               className="btnBasic"
               id="KortSlett"
@@ -27,7 +27,7 @@ class ListElement extends Component {
             <button
               className="btnBasic"
               id="KortEdit"
-              onClick={() => this.props.editKortText()}
+              onClick={() => this.props.editKortText(this.props.listId, this.props.item.id)}
             >
               <i class="far fa-edit"></i>
             </button>
@@ -35,9 +35,6 @@ class ListElement extends Component {
         </div>
       </li>
       </div>
-
-      
-
     );
   }
 }
