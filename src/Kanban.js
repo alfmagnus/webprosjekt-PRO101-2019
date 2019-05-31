@@ -79,6 +79,8 @@ class App extends React.Component {
     });
   };
 
+  //////////////////////// -----------------------------     Kort 
+
   renderImportance(firebase, id, listId) {
     if (firebase == "low") {
       return this.Text("Low", "#79c5fa", id, listId);
@@ -117,18 +119,17 @@ class App extends React.Component {
       }
     });
     if (priPush == "Low") {
-      this.priss(listId,id,"low")
+      this.priFirestore(listId,id,"low")
     }
     if (priPush == "Medium") {
-      this.priss(listId,id,"medium")
+      this.priFirestore(listId,id,"medium")
     }
     if (priPush == "High") {
-      this.priss(listId,id,"high")
+      this.priFirestore(listId,id,"high")
     }
   }
 
-
-  priss(listeId,kortId, pri){
+  priFirestore(listeId,kortId, pri){
     let temp = this.state.items;
       for (let liste in temp) {
         if (temp[liste].id == listeId) {
@@ -148,8 +149,6 @@ class App extends React.Component {
         }
       }
   }
-
-
   
   async editKortText(listeId, kortId) {
     const { value: text } = await Swal.fire({
@@ -175,15 +174,14 @@ class App extends React.Component {
                   elements: temp[liste].elements
                 });
             }
+            this.alertLagtTil(text, "Kortet")
           }
         }
       }
     }
   }
 
-  
-
-  async editListeText() {
+  async addNewCard(listeId) {
     const { value: text } = await Swal.fire({
       title: "Endre navn på listen",
       input: "text",
@@ -191,19 +189,14 @@ class App extends React.Component {
       showCancelButton: true
     });
 
-    if (text) {
-      Swal.fire(text);
+    if (text && listeId) {
+      let card = { title: text, priStatus: "medium", creation: Date.now(), id: Date.now() };
       db.collection("Kanban")
-        .doc("lir2tyj2m84KFPS8IThx")
+        .doc(listeId)
         .update({
-          name: text
+          elements: firebase.firestore.FieldValue.arrayUnion(card)
         });
     }
-  }
-
-  unixToTime(timeCreationFire) {
-    var time = new Date(timeCreationFire);
-    return time.toLocaleString();
   }
 
   removeItem(listeId, kortId) {
@@ -221,6 +214,44 @@ class App extends React.Component {
           }
         }
       }
+  }
+
+  unixToTime(timeCreationFire) {
+    var time = new Date(timeCreationFire);
+    return time.toLocaleString();
+  }
+
+  //////////////////////// -----------------------------     Liste 
+
+  async editListeText(listeId) {
+    const { value: text } = await Swal.fire({
+      title: "Endre navn på listen",
+      input: "text",
+      inputPlaceholder: "Skriv inn navn her...",
+      showCancelButton: true
+    });
+
+    if (text) {
+      this.alertLagtTil(text, "Liste")
+      db.collection("Kanban")
+        .doc(listeId)
+        .update({
+          name: text
+        });
+    }
+  }
+
+  alertLagtTil(text, type){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    Toast.fire({
+      type: 'success',
+      title: type + ' ble endret til ' + text
+    })
   }
 
   inputKortRender() {
@@ -274,23 +305,6 @@ class App extends React.Component {
     }
   };
 
-  async addNewCard(listeId) {
-    const { value: text } = await Swal.fire({
-      title: "Endre navn på listen",
-      input: "text",
-      inputPlaceholder: "Skriv inn navn her...",
-      showCancelButton: true
-    });
-
-    if (text && listeId) {
-      let card = { title: text, priStatus: "medium", creation: Date.now(), id: Date.now() };
-      db.collection("Kanban")
-        .doc(listeId)
-        .update({
-          elements: firebase.firestore.FieldValue.arrayUnion(card)
-        });
-    }
-  }
   render() {
     return (
       <div className="App">
@@ -322,7 +336,7 @@ class App extends React.Component {
                           <button
                             className="btnBasic"
                             id="ListeEdit"
-                            onClick={() => this.editListeText()}
+                            onClick={() => this.editListeText(liste.id)}
                           >
                             <i class="fas fa-ellipsis-v" />
                           </button>

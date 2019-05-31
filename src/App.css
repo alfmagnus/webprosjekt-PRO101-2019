@@ -59,10 +59,6 @@ ul {
   overflow-x: auto;
   width: auto;
 }
-li{
-
-}
-
 .KanbanBox{
   min-height: 84vh;
   min-width: 96vw;
@@ -181,6 +177,7 @@ li{
   display: inline;
   padding: 10px 12px;
 }
+
 #loginbtn{
   background-color: #3e8abd;
 }
