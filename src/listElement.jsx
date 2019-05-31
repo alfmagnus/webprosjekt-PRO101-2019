@@ -11,11 +11,11 @@ class ListElement extends Component {
       <div>
       <li key={this.props.item.title}>
         <div className="re">
-            {this.props.renderImportance(this.props.priStatus, this.props.item.id, this.props.listId)}
+            {this.props.renderImportance(this.props.item.priStatus, this.props.item.id, this.props.listId)}
             <button
               className="btnBasic"
               id="KortSlett"
-              onClick={() => this.props.removeItem(this.props.item.id)}
+              onClick={() => this.props.removeItem(this.props.listId, this.props.item.id)}
             >
               <i className="fas fa-trash" />
             </button>
