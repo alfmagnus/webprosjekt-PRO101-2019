@@ -1,5 +1,5 @@
 .App {
-
+  
 }
 
 .App-header {
@@ -45,7 +45,7 @@ h3{
   color: #fff;
   font-size: 12px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  padding: 0.6vh;
+  padding: 0.6vh; 
 }
 
 #loggut{
@@ -59,6 +59,7 @@ ul {
   overflow-x: auto;
   width: auto;
 }
+
 .KanbanBox{
   min-height: 84vh;
   min-width: 96vw;
@@ -68,7 +69,7 @@ ul {
   display: table;
   clear: both;
 }
-.row{
+.row{ 
   float: left;
   width: 30vh;
   margin-right: 2vh;
@@ -116,7 +117,7 @@ ul {
   font-size: 14px;
   position: center;
 }
-.rowListe{
+.rowListe{ 
   float: left;
   width: 30vh;
   margin-right: 2vh;
@@ -177,7 +178,6 @@ ul {
   display: inline;
   padding: 10px 12px;
 }
-
 #loginbtn{
   background-color: #3e8abd;
 }
@@ -213,29 +213,6 @@ ul {
 .inputKort1{
   text-align: center
 }
-.editKort{
-  padding: 1vh;
-  border-radius: 2px;
-  background-color: rgb(220, 225, 233);
-  cursor: pointer;
-  border: 0;
-  min-width: 100%;
-  color: #818b98;
-  font-size: 14px;
-  position: center;
-}
-#nyEdit{
-  padding: 1vh;
-  border-radius: 6px;
-  background-color: #f6f8fc;
-  cursor: pointer;
-  border: 0;
-  min-width: 100%;
-  color: #5d5c80;
-  font-size: 14px;
-  position: center;
-  border-top: 0;
-}
 #leggtilKort{
   position: relative;
   background-color: rgb(98, 204, 98);
@@ -251,18 +228,20 @@ ul {
   min-width: 3vh;
 }
 .KortNavn{
-  font-size: 21px;
+  font-size: 24px;
   padding-left: 0.4vh;
-  display: inline;
+  margin-top: 0.5vh;
 }
 .KortLagtTil{
   font-size: 11px;
   padding-left: 0.4vh;
-  margin-top: 0.5vh;
+  display: inline;
 }
 #KortSlett{
-  min-width: 2.5vh;
-  font-size: 1.1vh;
+  display: inline;
+  float: right;
+  min-width: 3vh;
+  font-size: 1.5vh;
   color: rgba(50, 115, 220, 0.3);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: transparent;
@@ -271,51 +250,43 @@ ul {
   background-color: #df5050;
   color: #fff;
 }
-
-#KortSlettDiv{
-  display: inline;
-  float: right;
+.KortDivBottom{
+  margin-top: -3vh;
 }
 #KortEdit{
+  display: inline;
+  float: right;
   min-width: 2.5vh;
-  font-size: 1.1vh;
+  font-size: 1.5vh;
   color: rgba(50, 115, 220, 0.3);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: transparent;
 }
 #KortEdit:hover{
-  background-color: #df5050;
+  background-color: #508edf;
+  color: #fff;
+}
+#ListeEdit{
+  display: inline;
+  float: right;
+  margin-right: 1.2vh;
+  min-width: 2vh;
+  font-size: 2vh;
+  color: rgba(50, 115, 220, 0.3);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  background-color: transparent;
+}
+#ListeEdit:hover{
+  background-color: rgba(50, 115, 220, 0.3);
   color: #fff;
 }
 
-#KortEditDiv{
-  display: inline;
-  float: right;
-  margin-top: 2.2vh;
-  margin-right: -2.7vh;
-}
-.editKort{
-  width: 24.2vh;
-  font-size:16px;
-  color: #fff;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-  border: none;
-  background: #c8d4e6;
-  padding: 1.4vh;
-  border-radius: 4px;
-}
-#editRow{
-  color: rgba(50, 115, 220, 0.5);
-  float: right;
-  margin-top: 0.6vh;
-  margin-right: 1.5vh;
-  font-size: 18px;
-}
+
 .PrioriteringBox{
   font-size: 12px;
   background-color: #77e677;
   width: 7vh;
+  cursor: pointer;
   border-radius: 2px;
   height: 2.25vh;
   border: none;
@@ -323,7 +294,6 @@ ul {
 #PrioriteringText{
   padding-top: 0.1vh;
   color: #fff;
-
 }
 .ghost {
   opacity: .5;
@@ -331,7 +301,4 @@ ul {
 }
 .kortTopRow{
   margin-top: -0.5vh;
-}
-.editKort1 input{
-  width: 15vh;
 }
