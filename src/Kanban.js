@@ -253,6 +253,7 @@ class App extends React.Component {
       title: type + ' ble endret til ' + text
     })
   }
+  ///test
 
   inputKortRender() {
     return (
