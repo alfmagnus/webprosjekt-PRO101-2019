@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import "./App.css";
 import Sortable from "react-sortablejs";
 
@@ -12,19 +12,19 @@ class App extends React.Component {
     super();
     this.state = {
       nyListe: "",
-      name: "",
       velgPri: "",
       NyListeBtn: false,
       items: [],
-      editTest: ""
+      listElements: [],
+      ids: []
     };
-    this.handleSubmit2 = this.handleSubmit2.bind(this);
     this.Text = this.Text.bind(this);
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.logout = this.logout.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
+    this.addNewCard = this.addNewCard.bind(this);
+    this.editKortText = this.editKortText.bind(this);
   }
 
   logout() {
@@ -32,9 +32,8 @@ class App extends React.Component {
   }
 
   handleChange(e) {
-    e.preventDefault();
     this.setState({
-      [e.target.name]: e.props.editTest
+      [e.target.name]: e.target.value
     });
   }
 
@@ -46,91 +45,133 @@ class App extends React.Component {
     db.settings({
       timestampsInSnapshots: true
     });
-    db.collection("Kanban").add({
+    db.collection("Kanban")
+      .add({
         name: this.state.nyListe,
-        elements:[]
-    });
+        elements: []
+      })
+      .then(resolved => {
+        db.collection("Kanban")
+          .doc(resolved.id)
+          .update({
+            id: resolved.id
+          });
+      });
     this.setState({
       NyListeBtn: false
     });
   }
 
-    handleSubmit2(e) {
-        e.preventDefault();
-        db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").update({
-            name: this.state.editTest
-        });
-        alert("BNISJDA");
-
-    }
-  
   componentDidMount = () => {
     db.collection("Kanban").onSnapshot(snapshot => {
       let newState = [];
+      let ids = [];
       snapshot.forEach(function(doc) {
-        newState.push(
-          doc.data()
-        );
+        newState.push(doc.data());
+        ids.push(doc.id);
       });
       this.setState({
-        items: newState
+        items: newState,
+        ids: ids
       });
     });
   };
 
-  renderImportance(firebase, id){
-    if(firebase == "low"){
-      return this.Text("Low", "#79c5fa", id)
+  renderImportance(firebase, id, listId) {
+    if (firebase == "low") {
+      return this.Text("Low", "#79c5fa", id, listId);
     }
-    if(firebase == "medium"){
-      return this.Text("Medium", "#fac879", id)
+    if (firebase == "medium") {
+      return this.Text("Medium", "#fac879", id, listId);
     }
-    if(firebase == "high"){
-      return this.Text("High", "#fa7979", id)
+    if (firebase == "high") {
+      return this.Text("High", "#fa7979", id, listId);
     }
   }
-  Text(pri, color2, id){
-    return(
-      <button 
-        className="PrioriteringBox" 
-        style={{backgroundColor: String(color2)}} 
+
+  Text(pri, color2, id, listId) {
+    return (
+      <button
+        className="PrioriteringBox"
+        style={{ backgroundColor: String(color2) }}
         onClick={() => {
-          this.changeImportance(pri, id);
+          this.changeImportance(pri, id, listId);
         }}
       >
         <div id="PrioriteringText">{pri}</div>
       </button>
-    )
+    );
   }
 
-  async changeImportance(pri, id){
-    const {value: priPush} = await Swal.fire({
+  async changeImportance(pri, id, listId) {
+    const { value: priPush } = await Swal.fire({
       title: "Velg prioritet på kortet",
       input: "radio",
       inputValue: pri,
       inputOptions: {
-        "Low": "Lav",
-        "Medium": "Medium",
-        "High": "Høy"
+        Low: "Lav",
+        Medium: "Medium",
+        High: "Høy"
       }
-    })
-    //testing
+    });
     if (priPush == "Low") {
-      db.collection("Kanban").add({
-        priStatus: "low"
-    });
+      console.log("priStatus: Endret til low");
     }
-    //testing
     if (priPush == "Medium") {
-      db.collection("Kanban").add({
-        priStatus: "medium"
-    });
+      console.log("priStatus: Endret til medium");
     }
-    //testing
     if (priPush == "High") {
-      db.collection("Kanban").doc("lir2tyj2m84KFPS8IThx").collection("secElements").doc("8RaR0jiEnXljSaEH6Jbz").update({
-        priStatus: "medtes"
+      db.doc(`Kanban/${listId}/secElements/${id}`).update({
+        priStatus: "high"
+      });
+    }
+  }
+  
+  async editKortText(listeId, kortId) {
+    const { value: text } = await Swal.fire({
+      title: "Endre navn på kortet",
+      input: "text",
+      inputPlaceholder: "Skriv inn navn her...",
+      showCancelButton: true
     });
+
+    if (text) {
+      let temp = this.state.items;
+      for (let liste in temp) {
+        if (temp[liste].id == listeId) {
+          for (let card in temp[liste].elements) {
+            if (temp[liste].elements[card].id == kortId) {
+              temp[liste].elements[card].title = text;
+              this.setState({
+                items: temp
+              });
+              db.collection("Kanban")
+                .doc(listeId)
+                .update({
+                  elements: temp[liste].elements
+                });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  async editListeText() {
+    const { value: text } = await Swal.fire({
+      title: "Endre navn på listen",
+      input: "text",
+      inputPlaceholder: "Skriv inn navn her...",
+      showCancelButton: true
+    });
+
+    if (text) {
+      Swal.fire(text);
+      db.collection("Kanban")
+        .doc("lir2tyj2m84KFPS8IThx")
+        .update({
+          name: text
+        });
     }
   }
 
@@ -144,36 +185,6 @@ class App extends React.Component {
     const itemRef = firebase.database().ref(`/items/${itemId}`);
     itemRef.remove();
   }
-
-  handleEdit(e) {
-      this.state.props({defaultValue: e.editTest
-      });
-  }
-/* editItemRender(itemId) {
-      const itemRef = firebase.database().ref(`/items/${itemId}`);
-      return (
-          <div className="editKort1">
-              <form>
-                 <input
-                      name="name"
-                      className="editKort"
-                      type="text"
-                      onChange={this.handleSubmit2}
-                      value={this.state.name}
-                />
-                <button
-                      type="button"
-                    onClick= {() => alert("Hello!")}
-                     >
-                    Hi
-                </button>
-                </form>
-            </div>
-        );
-  }
-  */
-
-
 
   inputKortRender() {
     return (
@@ -226,6 +237,23 @@ class App extends React.Component {
     }
   };
 
+  async addNewCard(listeId) {
+    const { value: text } = await Swal.fire({
+      title: "Endre navn på listen",
+      input: "text",
+      inputPlaceholder: "Skriv inn navn her...",
+      showCancelButton: true
+    });
+
+    if (text && listeId) {
+      let card = { title: text, pri: "", creation: Date.now(), id: Date.now() };
+      db.collection("Kanban")
+        .doc(listeId)
+        .update({
+          elements: firebase.firestore.FieldValue.arrayUnion(card)
+        });
+    }
+  }
   render() {
     return (
       <div className="App">
@@ -238,41 +266,59 @@ class App extends React.Component {
         <main className="Main">
           <div className="KanbanBox">
             <ul>
-
               {this.state.items.map(liste => {
-                return (  
+                return (
                   <Sortable
-                        options={{
-                          group: "liste",
-                          animation: 150,
-                          direction: "horizontal",
-                          handle: "#rowHeader",
-                          ghostClass: "ghost",
-                        }}
-                      >
-                  <li>
-                    <div className="row">
-                      <div id="rowHeader">
-                        <h1>{liste.name}</h1>
-                        <i class="fas fa-ellipsis-v" id="editRow" />
+                    options={{
+                      group: "liste",
+                      animation: 150,
+                      direction: "horizontal",
+                      handle: "#rowHeader",
+                      ghostClass: "ghost"
+                    }}
+                    tag="li"
+                  >
+                    <li>
+                      <div className="row">
+                        <div id="rowHeader">
+                          <h1>{liste.name}</h1>
+                          <button
+                            className="btnBasic"
+                            id="ListeEdit"
+                            onClick={() => this.editListeText()}
+                          >
+                            <i class="fas fa-ellipsis-v" />
+                          </button>
+                        </div>
+                        <Sortable
+                          options={{
+                            group: "shared",
+                            animation: 150
+                          }}
+                        >
+                          {liste.elements.map(item => {
+                            return (
+                              <ListElement
+                                listId={liste.id}
+                                item={item}
+                                removeItem={this.removeItem}
+                                editKortText={this.editKortText}
+                                unixToTime={this.unixToTime}
+                                renderImportance={this.renderImportance}
+                              />
+                            );
+                          })}
+                        </Sortable>
+                        <div>
+                          <button
+                            className="nyttKort"
+                            onClick={() => this.addNewCard(liste.id)}
+                          >
+                            Legg til Kort
+                          </button>
+                        </div>
                       </div>
-                      <Sortable
-                        options={{
-                          group: "shared",
-                          animation: 150
-                        }}
-                      >
-                        {liste.elements.map(item => {
-                          return <ListElement item={item} removeItem={this.removeItem}  handleEdit={this.handleEdit} handleChange={this.handleChange} handleSubmit2={this.handleSubmit2} unixToTime={this.unixToTime} renderImportance={this.renderImportance}/>;
-                        })}
-                      </Sortable>
-                      <div>
-                        <button className="nyttKort">
-                          Legg til Kort
-                        </button>
-                      </div>
-                    </div>
-                  </li>
+                    </li>
                   </Sortable>
                 );
               })}
@@ -280,8 +326,7 @@ class App extends React.Component {
             <div className="rowListe">
               {this.state.NyListeBtn === false
                 ? this.btnListRender()
-                : this.inputKortRender()
-              }
+                : this.inputKortRender()}
             </div>
           </div>
         </main>
@@ -292,64 +337,4 @@ class App extends React.Component {
 
 export default App;
 
-
 //mal sudo
-
-
-
-// Kanban
-// firebase = [
-//   -list
-//   --kort
-//   --{name: "Kanban", elements:["asd","223"]}
-// ]
-
-// <sortable class="lists">
-// this.state.items.map((liste) => {
-
-//   <SharedGroup  items={liste}></SharedGroup>
-// })
-// </sortable>
-// Sortable options:{
-//   handle: ".rowHeader",
-//   direction: "horizontal"
-// }
-
-// SharedGroups:
-// render{
-//   <h1>{this.props.name}</h1>
-// <sortable>
-//   this.props.elements.map({
-
-//   })
-// </sortable>
-// }
-// props.name
-
-// renderImportance(firebase){
-//   if(firease == "high"){
-//     return (<div></div>)
-//   }
-// }
-
-
-
-
-                      {/* {liste.elements.map((item) => {
-                            return (
-                              <li key={item.id}>
-                                {item.title}
-                                <SharedGroup items={[
-                                <div>
-                                  <div className="KortNavn">{item.title}</div>
-                                  <div id="KortSlettDiv">
-                                  <button className="btnBasic" id="KortSlett" 
-                                    onClick={() => this.removeItem(item.id)}>
-                                    <i className="fas fa-trash"/>
-                                  </button>
-                                  </div>
-                                  <div className="KortLagtTil">{this.unixToTime(item.creation)}</div>
-                                </div>]}/>
-                                </li>
-                              )
-                          })}              */}
