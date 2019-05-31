@@ -18,6 +18,8 @@ class App extends React.Component {
       listElements: [],
       ids: []
     };
+
+    this.removeItem = this.removeItem.bind(this);
     this.Text = this.Text.bind(this);
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -115,17 +117,39 @@ class App extends React.Component {
       }
     });
     if (priPush == "Low") {
-      console.log("priStatus: Endret til low");
+      this.priss(listId,id,"low")
     }
     if (priPush == "Medium") {
-      console.log("priStatus: Endret til medium");
+      this.priss(listId,id,"medium")
     }
     if (priPush == "High") {
-      db.doc(`Kanban/${listId}/secElements/${id}`).update({
-        priStatus: "high"
-      });
+      this.priss(listId,id,"high")
     }
   }
+
+
+  priss(listeId,kortId, pri){
+    let temp = this.state.items;
+      for (let liste in temp) {
+        if (temp[liste].id == listeId) {
+          for (let card in temp[liste].elements) {
+            if (temp[liste].elements[card].id == kortId) {
+              temp[liste].elements[card].priStatus = pri;
+              this.setState({
+                items: temp
+              });
+              db.collection("Kanban")
+                .doc(listeId)
+                .update({
+                  elements: temp[liste].elements
+                });
+            }
+          }
+        }
+      }
+  }
+
+
   
   async editKortText(listeId, kortId) {
     const { value: text } = await Swal.fire({
@@ -157,6 +181,8 @@ class App extends React.Component {
     }
   }
 
+  
+
   async editListeText() {
     const { value: text } = await Swal.fire({
       title: "Endre navn på listen",
@@ -180,10 +206,21 @@ class App extends React.Component {
     return time.toLocaleString();
   }
 
-  //Må oppdateres til Firestore
-  removeItem(itemId) {
-    const itemRef = firebase.database().ref(`/items/${itemId}`);
-    itemRef.remove();
+  removeItem(listeId, kortId) {
+    let temp = this.state.items;
+      for (let liste in temp) {
+        if (temp[liste].id == listeId) {
+          for (let card in temp[liste].elements) {
+            if (temp[liste].elements[card].id == kortId) {
+              db.collection("Kanban")
+                .doc(listeId)
+                .update({
+                  elements: firebase.firestore.FieldValue.arrayRemove(temp[liste].elements[card])
+                });
+            }
+          }
+        }
+      }
   }
 
   inputKortRender() {
@@ -246,7 +283,7 @@ class App extends React.Component {
     });
 
     if (text && listeId) {
-      let card = { title: text, pri: "", creation: Date.now(), id: Date.now() };
+      let card = { title: text, priStatus: "medium", creation: Date.now(), id: Date.now() };
       db.collection("Kanban")
         .doc(listeId)
         .update({
