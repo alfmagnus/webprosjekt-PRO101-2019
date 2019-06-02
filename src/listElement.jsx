@@ -9,8 +9,8 @@ class ListElement extends Component {
   render() {
     return (
       <div>
-      <li key={this.props.item.title}>
-        <div className="re">
+      <li key={this.props.item.id}>
+        <div className="kort">
             {this.props.renderImportance(this.props.item.priStatus, this.props.item.id, this.props.listId)}
             <button
               className="btnBasic"

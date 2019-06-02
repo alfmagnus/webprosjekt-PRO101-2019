@@ -7,7 +7,7 @@
   min-height: 7vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
   justify-content: center;
   font-size: 18px;
   color: white;
@@ -29,11 +29,41 @@ h1{
 h2{
   color: gray;
 }
-h3{
+#prosjektnavn{
+  float: left;
+  margin-left: 10vh;
+  font-weight: 600;
+}
+#brukernavn{
+  text-align: center;
+  margin-right: 20vh;
   font-size: 16px;
-  color: gray;
-  font-weight: 400;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.sidebar{
+  width: 3.4vw;
+  height: 93vh;
+  background-color: #a4c8d8;
+  float:left;
+}
+.sidebarIcon{
+  color: rgb(136, 148, 165);
+  margin-bottom: 2vh;
+  padding-bottom: 2vh;
+}
+.sidebarName{
+  margin-top: 0vh; 
+  font-size: 10px;
+  
+}
+.linkTo {
+  display: block;
+  font-size: 23pt;
+  height: 6vh;
+  text-align: center;
+  margin-bottom: 1vh;
+}
+.linkWrapper {
+  padding-top: 25px;
 }
 
 .btnBasic{
@@ -54,21 +84,23 @@ h3{
 }
 ul {
   list-style: none;
-  display: inline;
   padding: 0;
-  overflow-x: auto;
-  width: auto;
+}
+li{
+  display: inline-block;
+  vertical-align:top;
+}
+.KanbanBox{
+  min-height: 91vh;
+  width: 94vw;
+  display: block;
+  overflow-x: scroll;
+  white-space: nowrap;
+  padding-left: 4vh;
+  padding-top: 2vh;
+    
 }
 
-.KanbanBox{
-  min-height: 84vh;
-  min-width: 96vw;
-  margin: 3vh;
-}
-.KanbanBox:after{
-  display: table;
-  clear: both;
-}
 .row{ 
   float: left;
   width: 30vh;
@@ -99,9 +131,11 @@ ul {
   margin-top: 1vh;
   margin-bottom: 1vh;
 }
-.re{
+.kort{
   margin: 1.4vh;
+  margin-top: 0.5vh; 
   padding: 1vh;
+  width: 25vh;
   border-radius: 4px;
   background-color: #ffffff;
   color: #5d5c80;
@@ -118,7 +152,7 @@ ul {
   position: center;
 }
 .rowListe{ 
-  float: left;
+  display: inline-block;
   width: 30vh;
   margin-right: 2vh;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.26);

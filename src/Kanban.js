@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
 import Swal from "sweetalert2";
+import { BrowserRouter as NavLink } from "react-router-dom";
 import "./App.css";
 import Sortable from "react-sortablejs";
 
@@ -253,7 +254,6 @@ class App extends React.Component {
       title: type + ' ble endret til ' + text
     })
   }
-  ///test
 
   inputKortRender() {
     return (
@@ -267,6 +267,7 @@ class App extends React.Component {
             onChange={this.handleChange}
             value={this.state.nyListe}
           />
+          <br/>
           <button className="btnBasic" id="leggtilKort">
             {" "}
             Legg til
@@ -310,11 +311,34 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h3>webprosjekt</h3>
+          <div>
+            <div id="prosjektnavn">Webprosjekt</div>
+            <div id="brukernavn">Brukernavn</div>
+          </div>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
-            Logout
+            Logg ut
           </button>
         </header>
+        <div className="sidebar">
+          <div className="linkWrapper">
+            <div className="linkTo">
+              <NavLink>
+                <div className="sidebarIcon">
+                  <i class="fas fa-home"></i>
+                  <h3 className="sidebarName">Dashboard</h3>
+                </div>
+              </NavLink>
+            </div>
+            <div className="linkTo">
+              <NavLink>
+                <div className="sidebarIcon">
+                  <i class="fas fa-list-ol"></i>
+                  <h3 className="sidebarName">Kanban</h3>
+                </div>
+              </NavLink>
+            </div>
+          </div>
+        </div>
         <main className="Main">
           <div className="KanbanBox">
             <ul>
@@ -347,6 +371,10 @@ class App extends React.Component {
                             group: "shared",
                             animation: 150
                           }}
+                          onUpdate={(evt) => {
+                            console.log(evt.oldIndex)
+                            console.log(evt.newIndex)
+                        }}
                         >
                           {liste.elements.map(item => {
                             return (
@@ -374,12 +402,13 @@ class App extends React.Component {
                   </Sortable>
                 );
               })}
-            </ul>
-            <div className="rowListe">
+              <div className="rowListe">
               {this.state.NyListeBtn === false
                 ? this.btnListRender()
                 : this.inputKortRender()}
             </div>
+            </ul>
+            
           </div>
         </main>
       </div>
