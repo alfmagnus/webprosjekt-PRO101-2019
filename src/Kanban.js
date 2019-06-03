@@ -16,7 +16,6 @@ class App extends React.Component {
       velgPri: "",
       NyListeBtn: false,
       items: [],
-      listElements: [],
       ids: []
     };
 
@@ -217,6 +216,30 @@ class App extends React.Component {
       }
   }
 
+  removeListe(listeId) {
+    Swal.fire({
+      title: 'Er du sikker på at du vil slette?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ja, slett listen!',
+      cancelButtonText: 'Avbryt!'
+    }).then((result) => {
+      if (result.value) {
+        db.collection("Kanban")
+          .doc(listeId)
+          .delete();
+        Swal.fire(
+          'Slettet!',
+          'Listen ble slettet.',
+          'success'
+        )
+      }
+    })
+    
+  }
+
   unixToTime(timeCreationFire) {
     var time = new Date(timeCreationFire);
     return time.toLocaleString();
@@ -229,8 +252,9 @@ class App extends React.Component {
       title: "Endre navn på listen",
       input: "text",
       inputPlaceholder: "Skriv inn navn her...",
-      showCancelButton: true
+      showCancelButton: true,
     });
+    
 
     if (text) {
       this.alertLagtTil(text, "Liste")
@@ -312,7 +336,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <div>
-            <div id="prosjektnavn">Webprosjekt</div>
+            <div id="prosjektnavn">Webprosjekt - 2019</div>
             <div id="brukernavn">Brukernavn</div>
           </div>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
@@ -332,7 +356,7 @@ class App extends React.Component {
             <div className="linkTo">
               <NavLink>
                 <div className="sidebarIcon">
-                  <i class="fas fa-list-ol"></i>
+                <i class="fas fa-list"></i>
                   <h3 className="sidebarName">Kanban</h3>
                 </div>
               </NavLink>
@@ -357,11 +381,18 @@ class App extends React.Component {
                     <li>
                       <div className="row">
                         <div id="rowHeader">
-                          <h1>{liste.name}</h1>
+                        <button
+                            className="btnBasic"
+                            id="editTextbtn"
+                            onClick={() => this.editListeText(liste.id)}
+                          >
+                            {liste.name}
+                          </button>
+                          
                           <button
                             className="btnBasic"
                             id="ListeEdit"
-                            onClick={() => this.editListeText(liste.id)}
+                            onClick={() => this.removeListe(liste.id)}
                           >
                             <i class="fas fa-ellipsis-v" />
                           </button>
@@ -372,8 +403,7 @@ class App extends React.Component {
                             animation: 150
                           }}
                           onUpdate={(evt) => {
-                            console.log(evt.oldIndex)
-                            console.log(evt.newIndex)
+                            console.log(evt)
                         }}
                         >
                           {liste.elements.map(item => {

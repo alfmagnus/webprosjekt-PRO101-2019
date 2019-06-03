@@ -1,5 +1,4 @@
 .App {
-  
 }
 
 .App-header {
@@ -7,12 +6,10 @@
   min-height: 7vh;
   display: flex;
   flex-direction: column;
-  
   justify-content: center;
   font-size: 18px;
   color: white;
 }
-
 .Main {
   background-color: #EEF2F9;
   min-height: 93vh;
@@ -23,14 +20,10 @@
   font-size: calc(1px + 2vmin);
   color: white;
 }
-h1{
-  color: gray;
-}
-h2{
-  color: gray;
-}
 #prosjektnavn{
   float: left;
+  color: #f8f7f7;
+  font-size: 21px;
   margin-left: 10vh;
   font-weight: 600;
 }
@@ -42,17 +35,18 @@ h2{
 .sidebar{
   width: 3.4vw;
   height: 93vh;
-  background-color: #a4c8d8;
+  background-color: #d4daeb;
   float:left;
 }
 .sidebarIcon{
-  color: rgb(136, 148, 165);
+  color: rgb(111, 130, 156);
   margin-bottom: 2vh;
   padding-bottom: 2vh;
 }
 .sidebarName{
   margin-top: 0vh; 
   font-size: 10px;
+  color: rgb(111, 130, 156);
   
 }
 .linkTo {
@@ -60,10 +54,14 @@ h2{
   font-size: 23pt;
   height: 6vh;
   text-align: center;
-  margin-bottom: 1vh;
+  margin-bottom: 2.5vh;
 }
+.linkTo:hover{
+  background-color: #a2aff7;
+}
+
 .linkWrapper {
-  padding-top: 25px;
+  padding-top: 4vh;
 }
 
 .btnBasic{
@@ -118,18 +116,9 @@ li{
 #row2test{
   background-image: linear-gradient(#f6f8fc, #f6f8fc), linear-gradient(to right, #d9afd9 0%, #97d9e1 100%);
 }
-
-.row h1{
-  font-size: 17px;
-  margin-left: 2vh;
-  display: inline;
-  align-items: left;
-  color: #818b98;
-  font-weight: 600;
-}
 #rowHeader{
   margin-top: 1vh;
-  margin-bottom: 1vh;
+  margin-bottom: 0.1vh;
 }
 .kort{
   margin: 1.4vh;
@@ -170,7 +159,6 @@ li{
   position: center;
   border-top: 0;
 }
-
 .LoginInput{
   width: 28vh;
   font-size:16px;
@@ -215,18 +203,15 @@ li{
 #loginbtn{
   background-color: #3e8abd;
 }
-
 #signupbtn{
   background-color: #24363d;
   margin-top: 2vh;
 }
-
 .login-group label{
   font-size: 2vh;
   color: #fff;
   text-align: right;
 }
-
 .LoginText{
   font-size: 4vh;
   color: #fff;
@@ -253,7 +238,6 @@ li{
   margin: 1vh;
   right: 1vh;
 }
-
 #leggtilKortAvbryt{
   position: relative;
   background-color: #df5050;
@@ -314,8 +298,18 @@ li{
   background-color: rgba(50, 115, 220, 0.3);
   color: #fff;
 }
-
-
+#editTextbtn{
+  background-color: transparent;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
+  font-size: 18px;
+  margin-left: 2vh;
+  align-items: left;
+  color: #818b98;
+  font-weight: 600;
+}
+#editTextbtn:hover{
+  background-color: #7fa3d393;
+}
 .PrioriteringBox{
   font-size: 12px;
   background-color: #77e677;
