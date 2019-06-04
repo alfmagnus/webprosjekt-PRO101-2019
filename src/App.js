@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import firebase from './firebase';
 import Kanban from './Kanban';
+import Dashboard from "./Dashboard";
 import Login from './Login';
 
 

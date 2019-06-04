@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
 import Swal from "sweetalert2";
-import { BrowserRouter as NavLink } from "react-router-dom";
 import "./App.css";
+import Dashboard from "./Dashboard";
+import { BrowserRouter as Link, Router, Route } from "react-router-dom";
 import Sortable from "react-sortablejs";
 
 var db = firebase.firestore();
@@ -16,6 +17,7 @@ class App extends React.Component {
       velgPri: "",
       NyListeBtn: false,
       items: [],
+      listElements: [],
       ids: []
     };
 
@@ -79,8 +81,6 @@ class App extends React.Component {
     });
   };
 
-  //////////////////////// -----------------------------     Kort 
-
   renderImportance(firebase, id, listId) {
     if (firebase == "low") {
       return this.Text("Low", "#79c5fa", id, listId);
@@ -119,17 +119,18 @@ class App extends React.Component {
       }
     });
     if (priPush == "Low") {
-      this.priFirestore(listId,id,"low")
+      this.priss(listId,id,"low")
     }
     if (priPush == "Medium") {
-      this.priFirestore(listId,id,"medium")
+      this.priss(listId,id,"medium")
     }
     if (priPush == "High") {
-      this.priFirestore(listId,id,"high")
+      this.priss(listId,id,"high")
     }
   }
 
-  priFirestore(listeId,kortId, pri){
+
+  priss(listeId,kortId, pri){
     let temp = this.state.items;
       for (let liste in temp) {
         if (temp[liste].id == listeId) {
@@ -174,14 +175,13 @@ class App extends React.Component {
                   elements: temp[liste].elements
                 });
             }
-            this.alertLagtTil(text, "Kortet")
           }
         }
       }
     }
   }
 
-  async addNewCard(listeId) {
+  async editListeText() {
     const { value: text } = await Swal.fire({
       title: "Endre navn på listen",
       input: "text",
@@ -189,14 +189,19 @@ class App extends React.Component {
       showCancelButton: true
     });
 
-    if (text && listeId) {
-      let card = { title: text, priStatus: "medium", creation: Date.now(), id: Date.now() };
+    if (text) {
+      Swal.fire(text);
       db.collection("Kanban")
-        .doc(listeId)
+        .doc("lir2tyj2m84KFPS8IThx")
         .update({
-          elements: firebase.firestore.FieldValue.arrayUnion(card)
+          name: text
         });
     }
+  }
+
+  unixToTime(timeCreationFire) {
+    var time = new Date(timeCreationFire);
+    return time.toLocaleString();
   }
 
   removeItem(listeId, kortId) {
@@ -216,69 +221,6 @@ class App extends React.Component {
       }
   }
 
-  removeListe(listeId) {
-    Swal.fire({
-      title: 'Er du sikker på at du vil slette?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ja, slett listen!',
-      cancelButtonText: 'Avbryt!'
-    }).then((result) => {
-      if (result.value) {
-        db.collection("Kanban")
-          .doc(listeId)
-          .delete();
-        Swal.fire(
-          'Slettet!',
-          'Listen ble slettet.',
-          'success'
-        )
-      }
-    })
-    
-  }
-
-  unixToTime(timeCreationFire) {
-    var time = new Date(timeCreationFire);
-    return time.toLocaleString();
-  }
-
-  //////////////////////// -----------------------------     Liste 
-
-  async editListeText(listeId) {
-    const { value: text } = await Swal.fire({
-      title: "Endre navn på listen",
-      input: "text",
-      inputPlaceholder: "Skriv inn navn her...",
-      showCancelButton: true,
-    });
-    
-
-    if (text) {
-      this.alertLagtTil(text, "Liste")
-      db.collection("Kanban")
-        .doc(listeId)
-        .update({
-          name: text
-        });
-    }
-  }
-
-  alertLagtTil(text, type){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-    Toast.fire({
-      type: 'success',
-      title: type + ' ble endret til ' + text
-    })
-  }
-
   inputKortRender() {
     return (
       <div className="inputKort1">
@@ -291,7 +233,6 @@ class App extends React.Component {
             onChange={this.handleChange}
             value={this.state.nyListe}
           />
-          <br/>
           <button className="btnBasic" id="leggtilKort">
             {" "}
             Legg til
@@ -331,38 +272,32 @@ class App extends React.Component {
     }
   };
 
+  async addNewCard(listeId) {
+    const { value: text } = await Swal.fire({
+      title: "Endre navn på listen",
+      input: "text",
+      inputPlaceholder: "Skriv inn navn her...",
+      showCancelButton: true
+    });
+
+    if (text && listeId) {
+      let card = { title: text, priStatus: "medium", creation: Date.now(), id: Date.now() };
+      db.collection("Kanban")
+        .doc(listeId)
+        .update({
+          elements: firebase.firestore.FieldValue.arrayUnion(card)
+        });
+    }
+  }
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <div>
-            <div id="prosjektnavn">Webprosjekt - 2019</div>
-            <div id="brukernavn">Alf Magnus Lie</div>
-          </div>
+          <h3>webprosjekt</h3>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
-            Logg ut
+            Logout
           </button>
         </header>
-        <div className="sidebar">
-          <div className="linkWrapper">
-            <div className="linkTo">
-              <NavLink>
-                <div className="sidebarIcon">
-                  <i class="fas fa-home"></i>
-                  <h3 className="sidebarName">Dashboard</h3>
-                </div>
-              </NavLink>
-            </div>
-            <div className="linkTo">
-              <NavLink>
-                <div className="sidebarIcon">
-                <i class="fas fa-list"></i>
-                  <h3 className="sidebarName">Kanban</h3>
-                </div>
-              </NavLink>
-            </div>
-          </div>
-        </div>
         <main className="Main">
           <div className="KanbanBox">
             <ul>
@@ -381,18 +316,11 @@ class App extends React.Component {
                     <li>
                       <div className="row">
                         <div id="rowHeader">
-                        <button
-                            className="btnBasic"
-                            id="editTextbtn"
-                            onClick={() => this.editListeText(liste.id)}
-                          >
-                            {liste.name}
-                          </button>
-                          
+                          <h1>{liste.name}</h1>
                           <button
                             className="btnBasic"
                             id="ListeEdit"
-                            onClick={() => this.removeListe(liste.id)}
+                            onClick={() => this.editListeText()}
                           >
                             <i class="fas fa-ellipsis-v" />
                           </button>
@@ -402,9 +330,6 @@ class App extends React.Component {
                             group: "shared",
                             animation: 150
                           }}
-                          onUpdate={(evt) => {
-                            console.log(evt)
-                        }}
                         >
                           {liste.elements.map(item => {
                             return (
@@ -432,13 +357,12 @@ class App extends React.Component {
                   </Sortable>
                 );
               })}
-              <div className="rowListe">
+            </ul>
+            <div className="rowListe">
               {this.state.NyListeBtn === false
                 ? this.btnListRender()
                 : this.inputKortRender()}
             </div>
-            </ul>
-            
           </div>
         </main>
       </div>
