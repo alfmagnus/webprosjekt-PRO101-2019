@@ -29,8 +29,9 @@
 }
 #brukernavn{
   text-align: center;
-  margin-right: 20vh;
+  margin-right: 30vh;
   font-size: 16px;
+  margin-top: 0.35vh;
 }
 .sidebar{
   width: 3.4vw;
@@ -63,7 +64,6 @@
 .linkWrapper {
   padding-top: 4vh;
 }
-
 .btnBasic{
   border-radius: 2px;
   background-color: rgb(212, 136, 152);
@@ -75,7 +75,6 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   padding: 0.6vh; 
 }
-
 #loggut{
   right: 2vh;
   position: absolute;
@@ -96,7 +95,6 @@ li{
   white-space: nowrap;
   padding-left: 4vh;
   padding-top: 2vh;
-    
 }
 
 .row{ 
@@ -173,7 +171,10 @@ li{
 .loginform{
   background-color: rgba(58, 63, 75, .85);
   border-radius: 6px;
-  padding: 4vh;
+  padding-left: 4vh;
+  padding-right: 4vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   text-align: center;
   position: fixed;
   top: 50%;
@@ -192,20 +193,20 @@ li{
   border-radius: 2px;
   cursor: pointer;
   border: 0;
-  min-width: 30vh;
   color: #fff;
   font-size: 1.5vh;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   padding: 1vh;
   display: inline;
   padding: 10px 12px;
 }
 #loginbtn{
   background-color: #3e8abd;
+  min-width: 12vh;
 }
 #signupbtn{
-  background-color: #24363d;
-  margin-top: 2vh;
+  background-color: transparent;
+  margin-top: 1vh;
+  min-width: 12vh;
 }
 .login-group label{
   font-size: 2vh;

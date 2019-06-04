@@ -337,7 +337,7 @@ class App extends React.Component {
         <header className="App-header">
           <div>
             <div id="prosjektnavn">Webprosjekt - 2019</div>
-            <div id="brukernavn">Brukernavn</div>
+            <div id="brukernavn">Alf Magnus Lie</div>
           </div>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
             Logg ut
