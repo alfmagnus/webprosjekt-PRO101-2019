@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "webprosjekt-2019"
+    "default": "webprosjekt-2019",
+    "test": "webprosjekt-2019"
   }
 }
