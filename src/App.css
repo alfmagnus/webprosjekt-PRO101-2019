@@ -84,7 +84,7 @@ ul {
   padding: 0;
 }
 li{
-  display: inline-block;
+  
   vertical-align:top;
 }
 .KanbanBox{
@@ -96,7 +96,6 @@ li{
   padding-left: 4vh;
   padding-top: 2vh;
 }
-
 .row{ 
   float: left;
   width: 30vh;

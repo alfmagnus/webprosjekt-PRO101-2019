@@ -1,0 +1,44 @@
+h1{
+    color: #818b98;
+}
+h2{
+    color: #818b98;
+}
+h4{
+    color: #4d4f50;
+}
+ul {
+    
+  }
+
+.DashboardBox{
+    float: left;
+    background-color: #EEF2F9;
+    min-height: 91vh;
+    width: 49.5vw;
+    padding-left: 4vh;
+    padding-top: 2vh;
+}
+#VelkommenText{
+    font-size: 38px;
+}
+
+#oppgaveTitle{
+    font-size: 26px;
+    margin-left: 5vh;
+    margin-top: 4vh;
+}
+.oppgaveText{
+    font-size: 16px;
+    padding-left: 8vh;
+    padding-right: 8vh;
+}
+.Kalender{
+    float: left;
+    min-height: 91vh;
+    width: 45vw;
+    background-color: aliceblue;
+}
+.listDashboard{
+    list-style: circle;
+}

@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import ListElement from "./listElement";
 import firebase, { auth } from "./firebase.js";
 import Swal from "sweetalert2";
-import { BrowserRouter as NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
 import Sortable from "react-sortablejs";
 
 var db = firebase.firestore();
 
-class App extends React.Component {
+class Kanban extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,13 +24,8 @@ class App extends React.Component {
     this.renderImportance = this.renderImportance.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.logout = this.logout.bind(this);
     this.addNewCard = this.addNewCard.bind(this);
     this.editKortText = this.editKortText.bind(this);
-  }
-
-  logout() {
-    firebase.auth().signOut();
   }
 
   handleChange(e) {
@@ -216,29 +211,7 @@ class App extends React.Component {
       }
   }
 
-  removeListe(listeId) {
-    Swal.fire({
-      title: 'Er du sikker på at du vil slette?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ja, slett listen!',
-      cancelButtonText: 'Avbryt!'
-    }).then((result) => {
-      if (result.value) {
-        db.collection("Kanban")
-          .doc(listeId)
-          .delete();
-        Swal.fire(
-          'Slettet!',
-          'Listen ble slettet.',
-          'success'
-        )
-      }
-    })
-    
-  }
+  
 
   unixToTime(timeCreationFire) {
     var time = new Date(timeCreationFire);
@@ -293,7 +266,6 @@ class App extends React.Component {
           />
           <br/>
           <button className="btnBasic" id="leggtilKort">
-            {" "}
             Legg til
           </button>
           <button
@@ -331,38 +303,32 @@ class App extends React.Component {
     }
   };
 
+  removeListe(listeId) {
+    Swal.fire({
+      title: 'Er du sikker på at du vil slette?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ja, slett listen!',
+      cancelButtonText: 'Avbryt!'
+    }).then((result) => {
+      if (result.value) {
+        db.collection("Kanban")
+          .doc(listeId)
+          .delete();
+        Swal.fire(
+          'Slettet!',
+          'Listen ble slettet.',
+          'success'
+        )
+      }
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <div>
-            <div id="prosjektnavn">Webprosjekt - 2019</div>
-            <div id="brukernavn">Alf Magnus Lie</div>
-          </div>
-          <button className="btnBasic" id="loggut" onClick={this.logout}>
-            Logg ut
-          </button>
-        </header>
-        <div className="sidebar">
-          <div className="linkWrapper">
-            <div className="linkTo">
-              <NavLink>
-                <div className="sidebarIcon">
-                  <i class="fas fa-home"></i>
-                  <h3 className="sidebarName">Dashboard</h3>
-                </div>
-              </NavLink>
-            </div>
-            <div className="linkTo">
-              <NavLink>
-                <div className="sidebarIcon">
-                <i class="fas fa-list"></i>
-                  <h3 className="sidebarName">Kanban</h3>
-                </div>
-              </NavLink>
-            </div>
-          </div>
-        </div>
         <main className="Main">
           <div className="KanbanBox">
             <ul>
@@ -446,6 +412,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
-
-//mal sudo
+export default Kanban;
