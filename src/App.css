@@ -42,7 +42,6 @@
 .sidebarIcon{
   color: rgb(111, 130, 156);
   margin-bottom: 2vh;
-  padding-bottom: 2vh;
 }
 .sidebarName{
   margin-top: 0vh; 
@@ -58,11 +57,14 @@
   margin-bottom: 2.5vh;
 }
 .linkTo:hover{
-  background-color: #a2aff7;
+  background-color: rgba(96, 151, 224, 0.541);
 }
-
 .linkWrapper {
   padding-top: 4vh;
+}
+.activeLink .sidebarIcon{
+  background-color: rgba(112, 206, 230, 0.274);
+  border-left: 3px solid rgb(4, 149, 240);
 }
 .btnBasic{
   border-radius: 2px;

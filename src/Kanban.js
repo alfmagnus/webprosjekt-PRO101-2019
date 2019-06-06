@@ -39,9 +39,6 @@ class Kanban extends React.Component {
     if (this.state.nyListe === "") {
       return;
     }
-    db.settings({
-      timestampsInSnapshots: true
-    });
     db.collection("Kanban")
       .add({
         name: this.state.nyListe,
@@ -200,18 +197,33 @@ class Kanban extends React.Component {
         if (temp[liste].id == listeId) {
           for (let card in temp[liste].elements) {
             if (temp[liste].elements[card].id == kortId) {
-              db.collection("Kanban")
-                .doc(listeId)
-                .update({
-                  elements: firebase.firestore.FieldValue.arrayRemove(temp[liste].elements[card])
-                });
+              Swal.fire({
+                title: 'Er du sikker på at du vil slette?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#2bd152',
+                confirmButtonText: 'Ja, slett kortet!',
+                cancelButtonText: 'Avbryt!'
+              }).then((result) => {
+                if (result.value) {
+                  db.collection("Kanban")
+                    .doc(listeId)
+                    .update({
+                      elements: firebase.firestore.FieldValue.arrayRemove(temp[liste].elements[card])
+                    });
+                  Swal.fire(
+                    'Slettet!',
+                    'kortet ble slettet.',
+                    'success'
+                  )
+                }
+              })
             }
           }
         }
       }
   }
-
-  
 
   unixToTime(timeCreationFire) {
     var time = new Date(timeCreationFire);
@@ -252,7 +264,7 @@ class Kanban extends React.Component {
     })
   }
 
-  inputKortRender() {
+  inputListRender() {
     return (
       <div className="inputKort1">
         <form onSubmit={this.handleSubmit}>
@@ -308,8 +320,8 @@ class Kanban extends React.Component {
       title: 'Er du sikker på at du vil slette?',
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#2bd152',
       confirmButtonText: 'Ja, slett listen!',
       cancelButtonText: 'Avbryt!'
     }).then((result) => {
@@ -324,6 +336,7 @@ class Kanban extends React.Component {
         )
       }
     })
+    
   }
 
   render() {
@@ -401,10 +414,9 @@ class Kanban extends React.Component {
               <div className="rowListe">
               {this.state.NyListeBtn === false
                 ? this.btnListRender()
-                : this.inputKortRender()}
+                : this.inputListRender()}
             </div>
             </ul>
-            
           </div>
         </main>
       </div>

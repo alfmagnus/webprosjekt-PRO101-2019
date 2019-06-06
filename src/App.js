@@ -86,6 +86,7 @@ class App extends Component {
           <div className="linkWrapper">
             <div className="linkTo">
               <NavLink
+              exact={true}
               className="links"
               activeClassName="activeLink"
               to="/">
