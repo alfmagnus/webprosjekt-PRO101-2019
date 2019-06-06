@@ -1,16 +1,46 @@
 import React, {ReactNode, SyntheticEvent, Component } from "react";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import moment from "moment";
 import "./Dashboard.css";
 
 
 class Dashboard extends React.Component {
     constructor(props) {
-        super(props)
-
-        this.state = {
-            
+        super(props);
+        this.state = ({
+            eventName: "",
+            eventFinish: false,
+            eventStartDate: "" ,
+            eventDeadline: "",
+            eventTimeLeft: "",
+            events: [],
+            elements: [{name: "tim", id:23}, {name: "egil", id:30}],
+        })
+        for (let i = 1; i < 10; i++) {
+            this.state.events.push({
+                eventName: "Lag ny sånn og sånn og gjør" + i,
+                eventStartDate: moment(Date.now()).format("DD-MM-YYYY"),
+                eventDeadline: moment(this.eventStartDate).add(i, "day").format("DD-MM-YYYY"),
+                eventTimeLeft: moment(this.eventDeadline).subtract(Date.now()).format("DD"),
+            });
         }
     }
+
+
+
+
+    /*
+    style={!this.state.eventFinish ? {backgroundColor:"red"} : {backgroundColor:"green"}}
+
+    createEvents(number) {
+        let i;
+        for (i = 1; i < number; i++) {
+            this.state.events.push(new kanbanEvent(i))
+        }
+        console.log(this.state.events);
+        this.state.eventBool= true;
+    }
+    */
 
     render() {
         return (
@@ -65,8 +95,22 @@ class Dashboard extends React.Component {
                     </ul>
                 </div>
               </div>
-              <div className="Kalender">
-              
+              <div className="kalenderContainer">
+                <h2>Kalender</h2>
+                  <ul>
+                    <div>
+                      {this.state.events.map((items) => {
+                         return( <li className = "eventList">
+
+                                 <div className = "leftSide" id = "eventName">{items.eventName}</div>
+                                 <div className = "EventFinishContainer"><button className="btnBasic" id="ToggleFinish">Ikke startet
+                                 </button></div>
+                                 <div className = "leftSide" id = "eventDeadline">Deadline: {items.eventDeadline}</div>
+                                 <div className = "eventTimeLeft">Gjenstående tid: {items.eventTimeLeft} d</div>
+                             </li>
+                         )}) }
+                    </div>
+                  </ul>
               </div>
             </main>
           </div>

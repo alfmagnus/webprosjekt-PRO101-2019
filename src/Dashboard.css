@@ -33,12 +33,56 @@ ul {
     padding-left: 8vh;
     padding-right: 8vh;
 }
-.Kalender{
-    float: left;
+.kalenderContainer{
+    float: right;
     min-height: 91vh;
-    width: 45vw;
+    padding-right: 2vh;
+    width: 44vw;
     background-color: aliceblue;
+    display: block;
+    overflow: hidden;
 }
 .listDashboard{
     list-style: circle;
+}
+.eventList {
+    border: 1px solid #bbb;
+}
+ul {
+    list-style: none;
+}
+.eventList {
+    width: 100%;
+    height: 7vh;
+    vertical-align: top;
+}
+.leftSide {
+    padding-left: 1vw;
+}
+.eventName {
+    position: relative;
+    font-size: 2.5vh;
+    top: 1vh;
+
+
+}
+.eventDeadline {
+}
+.eventTimeLeft {
+    position: relative;
+    text-align: center;
+    float: right;
+    margin-right: 1vw;
+    top: -5vh;
+
+}
+.EventFinishContainer{
+    position: relative;
+    left: 20vw;
+
+}
+#eventDeadline {
+    position: relative;
+    bottom: 1vh;
+
 }
