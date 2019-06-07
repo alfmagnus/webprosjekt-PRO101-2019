@@ -22,7 +22,6 @@ ul {
 #VelkommenText{
     font-size: 38px;
 }
-
 #oppgaveTitle{
     font-size: 26px;
     margin-left: 5vh;
@@ -63,8 +62,6 @@ ul {
     position: relative;
     font-size: 2.5vh;
     top: 1vh;
-
-
 }
 .eventDeadline {
 }
@@ -74,15 +71,16 @@ ul {
     float: right;
     margin-right: 1vw;
     top: -5vh;
-
 }
 .EventFinishContainer{
     position: relative;
     left: 20vw;
-
 }
 #eventDeadline {
     position: relative;
     bottom: 1vh;
-
+}
+.KalenderHeader{
+    text-align: center;
+    font-size: 30px;
 }

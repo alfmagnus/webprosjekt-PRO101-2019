@@ -16,6 +16,7 @@ class Dashboard extends React.Component {
             events: [],
             elements: [{name: "tim", id:23}, {name: "egil", id:30}],
         })
+
         for (let i = 1; i < 10; i++) {
             this.state.events.push({
                 eventName: "Lag ny sånn og sånn og gjør" + i,
@@ -28,19 +29,6 @@ class Dashboard extends React.Component {
 
 
 
-
-    /*
-    style={!this.state.eventFinish ? {backgroundColor:"red"} : {backgroundColor:"green"}}
-
-    createEvents(number) {
-        let i;
-        for (i = 1; i < number; i++) {
-            this.state.events.push(new kanbanEvent(i))
-        }
-        console.log(this.state.events);
-        this.state.eventBool= true;
-    }
-    */
 
     render() {
         return (
@@ -60,7 +48,6 @@ class Dashboard extends React.Component {
                         <br/><br/>
                         Lag en klikkbar enkel trådskisse-prototype av konseptet sammen og som dere prøvekjører litt, før dere koder opp den ferdige løsningen.
                     </p>
-
                     <h4>Krav, deriblant tekniske, til løsningen.</h4>
                     <ul className="listDashboard">
                         <li>
@@ -72,7 +59,6 @@ class Dashboard extends React.Component {
                             Data skal oppbevares i JavaScript objekter i koden (dette er en utilstrekkelig løsning for en
                             ekte applikasjon, men fungerer godt for en prototype)
                         </li>
-
                         <li>
                             Eksempelet på neste side kan benyttes som et utgangspunkt for datastrukturen eller dere kan
                             lage deres eget.
@@ -96,7 +82,7 @@ class Dashboard extends React.Component {
                 </div>
               </div>
               <div className="kalenderContainer">
-                <h2>Kalender</h2>
+                <h2 className="KalenderHeader">Kalender</h2>
                   <ul>
                     <div>
                       {this.state.events.map((items) => {
