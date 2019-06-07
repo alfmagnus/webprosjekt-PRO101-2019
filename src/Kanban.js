@@ -418,6 +418,7 @@ class Kanban extends React.Component {
             </div>
             </ul>
           </div>
+          <h3 id="ErrorText">Error - siden må oppdateres manuelt</h3>
         </main>
       </div>
     );

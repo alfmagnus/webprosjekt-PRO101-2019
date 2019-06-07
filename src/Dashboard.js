@@ -15,7 +15,6 @@ class Dashboard extends React.Component {
             eventStartDate:"",
             eventDeadline:"",
             events: [],
-            elements: [{name: "tim", id:23}, {name: "egil", id:30}],
         })
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,7 +36,7 @@ class Dashboard extends React.Component {
             eventName: this.state.eventName,
             eventStartDate: this.state.eventStartDate,
             eventDeadline: this.state.eventDeadline,
-            eventStatus: "ikke startet"
+            eventStatus: "Ikke startet"
           })
           .then(resolved => {
             db.collection("Kalender")
@@ -126,6 +125,30 @@ class Dashboard extends React.Component {
         }
       }
 
+      removeListeKalender(id) {
+        Swal.fire({
+          title: 'Er du sikker på at du vil slette?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#2bd152',
+          confirmButtonText: 'Ja, slett listen!',
+          cancelButtonText: 'Avbryt!'
+        }).then((result) => {
+          if (result.value) {
+            db.collection("Kalender")
+              .doc(id)
+              .delete();
+            Swal.fire(
+              'Slettet!',
+              'Listen ble slettet fra kalenderen.',
+              'success'
+            )
+          }
+        })
+        
+      }
+
 
     render() {
         return (
@@ -190,8 +213,14 @@ class Dashboard extends React.Component {
                             <div className="EventFinishContainer">
                                 {this.renderImportance(items.eventStatus, items.id)}
                             </div>
+                            <div className="eventTimeLeft">Gjenstående tid: {moment(items.eventDeadline).diff(items.eventStartDate, 'days')} dager<button
+                              className="btnBasic"
+                              id="KalenderSlett"
+                              onClick={() => this.removeListeKalender(items.id)}
+                            >
+                              <i className="fas fa-trash" />
+                            </button></div>
                             
-                            <div className="eventTimeLeft">Gjenstående tid: {items.eventTimeLeft}</div>
                         </li>
                         )}) }
                 </div>

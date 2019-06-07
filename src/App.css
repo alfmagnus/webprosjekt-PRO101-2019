@@ -332,3 +332,10 @@ li{
 .kortTopRow{
   margin-top: -0.5vh;
 }
+#ErrorText{
+  position: absolute;
+  font-size: 10px;
+  bottom: 1vh;
+  right: 1vh;
+  color: rgb(252, 0, 0);
+}

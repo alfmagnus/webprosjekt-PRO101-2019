@@ -70,7 +70,6 @@ ul {
     position: relative;
     text-align: center;
     float: right;
-    margin-right: 1vw;
     top: -6.2vh;
 }
 .EventFinishContainer{
@@ -105,4 +104,14 @@ ul {
 }
 #inputName{
     padding: 1.1vh;
+}
+#KalenderSlett{
+    display: inline;
+    float: right;
+    margin-left: 1vh;
+    min-width: 3vh;
+    font-size: 1.5vh;
+    color: rgba(50, 115, 220, 0.3);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    background-color: transparent;
 }
