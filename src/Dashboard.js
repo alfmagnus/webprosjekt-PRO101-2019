@@ -1,33 +1,130 @@
 import React, {ReactNode, SyntheticEvent, Component } from "react";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import firebase, { auth } from "./firebase.js";
 import moment from "moment";
 import "./Dashboard.css";
+import Swal from "sweetalert2";
 
+const db = firebase.firestore();
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = ({
-            eventName: "",
-            eventFinish: false,
-            eventStartDate: "" ,
-            eventDeadline: "",
-            eventTimeLeft: "",
+            eventName:"",
+            eventStartDate:"",
+            eventDeadline:"",
             events: [],
             elements: [{name: "tim", id:23}, {name: "egil", id:30}],
         })
-
-        for (let i = 1; i < 10; i++) {
-            this.state.events.push({
-                eventName: "Lag ny sånn og sånn og gjør" + i,
-                eventStartDate: moment(Date.now()).format("DD-MM-YYYY"),
-                eventDeadline: moment(this.eventStartDate).add(i, "day").format("DD-MM-YYYY"),
-                eventTimeLeft: moment(this.eventDeadline).subtract(Date.now()).format("DD"),
-            });
-        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    handleChange(e) {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        if (this.state.eventName === "") {
+          return;
+        }
+        db.collection("Kalender")
+          .add({
+            eventName: this.state.eventName,
+            eventStartDate: this.state.eventStartDate,
+            eventDeadline: this.state.eventDeadline,
+            eventStatus: "ikke startet"
+          })
+          .then(resolved => {
+            db.collection("Kalender")
+              .doc(resolved.id)
+              .update({
+                id: resolved.id
+              });
+          });
+          this.setState({
+            eventName:"",
+            eventStartDate:"",
+            eventDeadline:"",
+          });
+    }
+
+    componentDidMount = () => {
+        db.collection("Kalender").onSnapshot(snapshot => {
+          let newState = [];
+          snapshot.forEach(function(doc) {
+            newState.push(doc.data());
+          });
+          this.setState({
+            events: newState,
+          });
+        });
+      };
+
+      renderImportance(firebase, id) {
+        if (firebase === "Ferdig") {
+          return this.Text("Ferdig", "#79c5fa", id);
+        }
+        if (firebase === "Pågår") {
+          return this.Text("Pågår", "#fac879", id);
+        }
+        if (firebase === "Ikke startet") {
+          return this.Text("Ikke startet", "#fa7979", id);
+        }
+      }
+    
+      Text(pri, color2, id, listId) {
+        return (
+          <button
+            className="btnBasic"
+            id="ToggleFinish"
+            style={{ backgroundColor: String(color2) }}
+            onClick={() => {
+              this.changeImportance(pri, id, listId);
+            }}
+          >
+            <div id="PrioriteringText">{pri}</div>
+          </button>
+        );
+      }
+
+      async changeImportance(pri, id, listId) {
+        const { value: priPush } = await Swal.fire({
+          title: "Velg status",
+          input: "radio",
+          inputValue: pri,
+          inputOptions: {
+            ikkestartet: "Ikke startet",
+            pågår: "Pågår",
+            ferdig: "Ferdig"
+          }
+        });
+        if (priPush == "ikkestartet") {
+            db.collection("Kalender")
+            .doc(id)
+            .update({
+                eventStatus: "Ikke startet"
+            });
+        }
+        if (priPush == "pågår") {
+            db.collection("Kalender")
+            .doc(id)
+            .update({
+                eventStatus: "Pågår"
+            });
+        }
+        if (priPush == "ferdig") {
+            db.collection("Kalender")
+            .doc(id)
+            .update({
+                eventStatus: "Ferdig"
+            });
+        }
+      }
 
 
     render() {
@@ -35,7 +132,7 @@ class Dashboard extends React.Component {
             <div className="App">
             <main className="main">
               <div className="DashboardBox">
-                <h1 id="VelkommenText">Hei, Alf Magnus</h1>
+                <h1 id="VelkommenText">Hei, Sturla Bakke</h1>
                 <h2 id="oppgaveTitle">PRO101 Webprossjekt</h2>
                 <div className="oppgaveText">
                     <p>
@@ -83,20 +180,52 @@ class Dashboard extends React.Component {
               </div>
               <div className="kalenderContainer">
                 <h2 className="KalenderHeader">Kalender</h2>
-                  <ul>
-                    <div>
-                      {this.state.events.map((items) => {
-                         return( <li className = "eventList">
-
-                                 <div className = "leftSide" id = "eventName">{items.eventName}</div>
-                                 <div className = "EventFinishContainer"><button className="btnBasic" id="ToggleFinish">Ikke startet
-                                 </button></div>
-                                 <div className = "leftSide" id = "eventDeadline">Deadline: {items.eventDeadline}</div>
-                                 <div className = "eventTimeLeft">Gjenstående tid: {items.eventTimeLeft} d</div>
-                             </li>
-                         )}) }
-                    </div>
-                  </ul>
+                <ul>
+                <div>
+                    {this.state.events.map((items) => {
+                        return( 
+                        <li className = "eventList">
+                            <div className="leftSide" id="eventName">{items.eventName}</div>
+                            <div className="leftSide" id="eventDeadline">Deadline: {items.eventDeadline}</div>
+                            <div className="EventFinishContainer">
+                                {this.renderImportance(items.eventStatus, items.id)}
+                            </div>
+                            
+                            <div className="eventTimeLeft">Gjenstående tid: {items.eventTimeLeft}</div>
+                        </li>
+                        )}) }
+                </div>
+                </ul>
+                <div className="LeggtilKalender">
+                    <form onSubmit={this.handleSubmit}>
+                        <input
+                            name="eventName"
+                            id="inputName"
+                            className="inputKalender"
+                            type="text"
+                            placeholder="legg til ny liste"
+                            onChange={this.handleChange}
+                            value={this.state.eventName}
+                        />
+                        <input
+                            name="eventStartDate"
+                            className="inputKalender"
+                            type="date"
+                            onChange={this.handleChange}
+                            value={this.state.eventStartDate}
+                        />
+                        <input
+                            name="eventDeadline"
+                            className="inputKalender"
+                            type="date"
+                            onChange={this.handleChange}
+                            value={this.state.eventDeadline}
+                        />
+                        <button className="btnBasic" id="KalenderBtn">
+                            Legg til
+                        </button>
+                    </form>
+                </div>
               </div>
             </main>
           </div>

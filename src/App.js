@@ -70,7 +70,7 @@ class App extends Component {
           <header className="App-header">
           <div>
             <div id="prosjektnavn">Webprosjekt - 2019</div>
-            <div id="brukernavn">Alf Magnus Lie</div>
+            <div id="brukernavn">Sturla Bakke</div>
           </div>
           <button className="btnBasic" id="loggut" onClick={this.logout}>
             Logg ut
